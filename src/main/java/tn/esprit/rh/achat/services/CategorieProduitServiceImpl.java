@@ -2,6 +2,7 @@ package tn.esprit.rh.achat.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.esprit.rh.achat.exception.ResourceNotFoundException;
 import tn.esprit.rh.achat.entities.CategorieProduit;
 import tn.esprit.rh.achat.repositories.CategorieProduitRepository;
 
@@ -20,7 +21,7 @@ public class CategorieProduitServiceImpl implements ICategorieProduitService {
 	}
 
 	@Override
-	public CategorieProduit addCategorieProduit(CategorieProduit cp) {
+	public CategorieProduit saveCategorieProduit(CategorieProduit cp) {
 		categorieProduitRepository.save(cp);
 		return cp;
 	}
@@ -32,15 +33,9 @@ public class CategorieProduitServiceImpl implements ICategorieProduitService {
 	}
 
 	@Override
-	public CategorieProduit updateCategorieProduit(CategorieProduit cp) {
-		categorieProduitRepository.save(cp);
-		return cp;
-	}
+	public CategorieProduit retrieveCategorieProduit(Long id) throws ResourceNotFoundException  {
+		return categorieProduitRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("CategorieProduit not found"));
 
-	@Override
-	public CategorieProduit retrieveCategorieProduit(Long id) {
-		CategorieProduit categorieProduit = categorieProduitRepository.findById(id).orElse(null);
-		return categorieProduit;
 	}
 
 }

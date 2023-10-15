@@ -26,7 +26,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 @ContextConfiguration(classes = {ProduitServiceImpl.class})
 @ExtendWith(SpringExtension.class)
-public class ProduitTest {
+class ProduitTest {
 
     @MockBean
    private CategorieProduitRepository categorieProduitRepository;

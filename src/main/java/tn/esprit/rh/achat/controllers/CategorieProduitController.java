@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.rh.achat.DTO.CategorieProduitDTO;
+import tn.esprit.rh.achat.exception.ResourceNotFoundException;
 import tn.esprit.rh.achat.entities.CategorieProduit;
 import tn.esprit.rh.achat.services.ICategorieProduitService;
 import org.modelmapper.ModelMapper;
@@ -32,7 +33,7 @@ public class CategorieProduitController {
 	// http://localhost:8089/SpringMVC/categorieProduit/retrieve-categorieProduit/8
 	@GetMapping("/retrieve-categorieProduit/{categorieProduit-id}")
 	@ResponseBody
-	public CategorieProduit retrieveCategorieProduit(@PathVariable("categorieProduit-id") Long categorieProduitId) {
+	public CategorieProduit retrieveCategorieProduit(@PathVariable("categorieProduit-id") Long categorieProduitId) throws ResourceNotFoundException {
 		return categorieProduitService.retrieveCategorieProduit(categorieProduitId);
 	}
 
@@ -42,7 +43,7 @@ public class CategorieProduitController {
 	public CategorieProduitDTO addCategorieProduit(@RequestBody CategorieProduitDTO categorieProduitDTO) {
 		CategorieProduit categorieProduitRequest = modelMapper.map(categorieProduitDTO, CategorieProduit.class);
 
-		CategorieProduit categorieProduit = categorieProduitService.addCategorieProduit(categorieProduitRequest);
+		CategorieProduit categorieProduit = categorieProduitService.saveCategorieProduit(categorieProduitRequest);
 
 		return modelMapper.map(categorieProduit, CategorieProduitDTO.class);
 	}
@@ -60,7 +61,7 @@ public class CategorieProduitController {
 	public CategorieProduitDTO modifyCategorieProduit(@RequestBody CategorieProduitDTO categorieProduitDTO) {
 		CategorieProduit categorieProduitRequest = modelMapper.map(categorieProduitDTO, CategorieProduit.class);
 
-		CategorieProduit categorieProduit = categorieProduitService.updateCategorieProduit(categorieProduitRequest);
+		CategorieProduit categorieProduit = categorieProduitService.saveCategorieProduit(categorieProduitRequest);
 
 		return modelMapper.map(categorieProduit, CategorieProduitDTO.class);
 
