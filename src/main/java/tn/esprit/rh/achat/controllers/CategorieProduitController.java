@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @Api(tags = "Gestion des categories Produit")
-
 @RequestMapping("/categorieProduit")
 public class CategorieProduitController {
 
@@ -38,7 +37,10 @@ public class CategorieProduitController {
 	}
 
 	// http://localhost:8089/SpringMVC/categorieProduit/add-categorieProduit
+	// http://localhost:8089/SpringMVC/categorieProduit/modify-categorieProduit
+
 	@PostMapping("/add-categorieProduit")
+	@PutMapping("/modify-categorieProduit")
 	@ResponseBody
 	public CategorieProduitDTO addCategorieProduit(@RequestBody CategorieProduitDTO categorieProduitDTO) {
 		CategorieProduit categorieProduitRequest = modelMapper.map(categorieProduitDTO, CategorieProduit.class);
@@ -55,17 +57,7 @@ public class CategorieProduitController {
 		categorieProduitService.deleteCategorieProduit(categorieProduitId);
 	}
 
-	// http://localhost:8089/SpringMVC/categorieProduit/modify-categorieProduit
-	@PutMapping("/modify-categorieProduit")
-	@ResponseBody
-	public CategorieProduitDTO modifyCategorieProduit(@RequestBody CategorieProduitDTO categorieProduitDTO) {
-		CategorieProduit categorieProduitRequest = modelMapper.map(categorieProduitDTO, CategorieProduit.class);
 
-		CategorieProduit categorieProduit = categorieProduitService.saveCategorieProduit(categorieProduitRequest);
-
-		return modelMapper.map(categorieProduit, CategorieProduitDTO.class);
-
-	}
 
 	
 }

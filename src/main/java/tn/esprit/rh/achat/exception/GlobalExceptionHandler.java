@@ -16,7 +16,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     // handling specific exception
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Object> resourceNotFoundHandling(ResourceNotFoundException exception, WebRequest request) {
-        exception.printStackTrace();
 
         ErrorDetails errorDetails =
                 new ErrorDetails("fail", HttpStatus.NOT_FOUND.value(), exception.getMessage(), new Date());
@@ -25,7 +24,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> globalExceptionHandling(Exception exception, WebRequest request) {
 
-        exception.printStackTrace();
         ErrorDetails errorDetails =
                 new ErrorDetails("fail", HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getMessage(), new Date());
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
