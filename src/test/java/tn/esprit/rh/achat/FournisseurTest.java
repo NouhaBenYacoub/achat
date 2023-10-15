@@ -2,7 +2,6 @@ package tn.esprit.rh.achat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
@@ -10,7 +9,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import tn.esprit.rh.achat.entities.Fournisseur;
 import tn.esprit.rh.achat.repositories.FournisseurRepository;
 import tn.esprit.rh.achat.services.FournisseurServiceImpl;
-import tn.esprit.rh.achat.services.ProduitServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +21,7 @@ import static org.mockito.Mockito.*;
 public class FournisseurTest {
 
     @MockBean
-    private FournisseurRepository repository;
+    private FournisseurRepository fournisseurRepository;
     @Autowired
     private FournisseurServiceImpl fournisseurServiceImpl;
 
@@ -44,11 +42,18 @@ public class FournisseurTest {
     @Test
     public void getFournisseurTest() {
         List<Fournisseur> fournisseurList = new ArrayList<>();
-        when(repository.findAll()).thenReturn(fournisseurList);
+        when(fournisseurRepository.findAll()).thenReturn(fournisseurList);
         List<Fournisseur> actualRetrieveAllFournisseurResult = fournisseurServiceImpl.retrieveAllFournisseurs();
 
         assertSame(fournisseurList, actualRetrieveAllFournisseurResult);
         assertTrue(actualRetrieveAllFournisseurResult.isEmpty());
-        verify(repository).findAll();
+        verify(fournisseurRepository).findAll();
+    }
+
+    @Test
+    void testDeleteFournisseur() {
+        doNothing().when(fournisseurRepository).deleteById((Long) any());
+        fournisseurServiceImpl.deleteFournisseur(123L);
+        verify(fournisseurRepository).deleteById((Long) any());
     }
 }
