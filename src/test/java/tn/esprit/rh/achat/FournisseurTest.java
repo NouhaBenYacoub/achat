@@ -40,7 +40,7 @@ public class FournisseurTest {
     }*/
 
     @Test
-    public void getFournisseurTest() {
+    public void testGetFournisseur() {
         List<Fournisseur> fournisseurList = new ArrayList<>();
         when(fournisseurRepository.findAll()).thenReturn(fournisseurList);
         List<Fournisseur> actualRetrieveAllFournisseurResult = fournisseurServiceImpl.retrieveAllFournisseurs();
