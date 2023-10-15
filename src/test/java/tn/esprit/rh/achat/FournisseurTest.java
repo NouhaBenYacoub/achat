@@ -13,8 +13,12 @@ import tn.esprit.rh.achat.services.FournisseurServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {FournisseurServiceImpl.class})
 @ExtendWith(SpringExtension.class)
@@ -25,7 +29,24 @@ public class FournisseurTest {
     @Autowired
     private FournisseurServiceImpl fournisseurServiceImpl;
 
- /*   @Test
+    @Test
+    public void testGetFournisseur() {
+        List<Fournisseur> fournisseurList = new ArrayList<>();
+        when(fournisseurRepository.findAll()).thenReturn(fournisseurList);
+        List<Fournisseur> actualRetrieveAllFournisseurResult = fournisseurServiceImpl.retrieveAllFournisseurs();
+        assertSame(fournisseurList, actualRetrieveAllFournisseurResult);
+        assertTrue(actualRetrieveAllFournisseurResult.isEmpty());
+        verify(fournisseurRepository).findAll();
+    }
+
+    @Test
+    public void testDeleteFournisseur() {
+        doNothing().when(fournisseurRepository).deleteById((Long) any());
+        fournisseurServiceImpl.deleteFournisseur(123L);
+        verify(fournisseurRepository).deleteById((Long) any());
+    }
+
+    /*   @Test
     public void getFournisseurTest() {
         System.out.println(" get test fournisseur");
 
@@ -38,22 +59,4 @@ public class FournisseurTest {
         fournisseurList.add(new Fournisseur(136L, "OK8", "Asus"));
         when(repository.findAll()).thenReturn(fournisseurList);
     }*/
-
-    @Test
-    public void testGetFournisseur() {
-        List<Fournisseur> fournisseurList = new ArrayList<>();
-        when(fournisseurRepository.findAll()).thenReturn(fournisseurList);
-        List<Fournisseur> actualRetrieveAllFournisseurResult = fournisseurServiceImpl.retrieveAllFournisseurs();
-
-        assertSame(fournisseurList, actualRetrieveAllFournisseurResult);
-        assertTrue(actualRetrieveAllFournisseurResult.isEmpty());
-        verify(fournisseurRepository).findAll();
-    }
-
-    @Test
-    public void testDeleteFournisseur() {
-        doNothing().when(fournisseurRepository).deleteById((Long) any());
-        fournisseurServiceImpl.deleteFournisseur(123L);
-        verify(fournisseurRepository).deleteById((Long) any());
-    }
 }
