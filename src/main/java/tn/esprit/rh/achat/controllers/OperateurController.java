@@ -58,9 +58,15 @@ public class OperateurController {
 	// http://localhost:8089/SpringMVC/operateur/modify-operateur
 	@PutMapping("/modify-operateur")
 	@ResponseBody
-	public Operateur modifyOperateur(@RequestBody Operateur operateur) {
-		return operateurService.updateOperateur(operateur);
+	public OperateurDTO modifyOperateur(@RequestBody OperateurDTO operateurDto) {
+		Operateur operateurRequest = modelMapper.map(operateurDto, Operateur.class);
+			Operateur operateur = operateurService.updateOperateur(operateurRequest);
+			// convert entity to DTO
+			return modelMapper.map(operateur, OperateurDTO.class);
+
+	}
+
 	}
 
 	
-}
+
