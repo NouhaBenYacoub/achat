@@ -6,18 +6,13 @@ import tn.esprit.rh.achat.entities.Operateur;
 import tn.esprit.rh.achat.repositories.OperateurRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OperateurServiceImpl implements IOperateurService {
 
 	@Autowired
 	OperateurRepository operateurRepository;
-
-    public OperateurServiceImpl(OperateurRepository operateurRepository) {
-    }
-
-    @Override
+	@Override
 	public List<Operateur> retrieveAllOperateurs() {
 		return (List<Operateur>) operateurRepository.findAll();
 	}
@@ -45,12 +40,5 @@ public class OperateurServiceImpl implements IOperateurService {
 		Operateur operateur = operateurRepository.findById(id).orElse(null);
 		return operateur;
 	}
-
-	@Override
-	public Optional<Operateur> getById(long l) {
-			return operateurRepository.findById(l);
-
-	}
-
 
 }
