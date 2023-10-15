@@ -13,6 +13,7 @@ import tn.esprit.rh.achat.services.FournisseurServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith( SpringRunner.class)
@@ -40,5 +41,10 @@ public class FournisseurTest {
         fournisseurList.add(Fournisseur.builder().idFournisseur(id3).code("FT88").libelle("Asus").build());
         when(repository.findAll()).thenReturn(fournisseurList);
 
+        // Maintenant, vous pouvez ajouter une assertion pour vérifier le comportement de service
+        List<Fournisseur> result = service.retrieveAllFournisseurs();
+
+        // Vérifiez si le résultat de service correspond à ce que vous avez configuré dans le mock repository
+        assertEquals(fournisseurList, result);
     }
 }
