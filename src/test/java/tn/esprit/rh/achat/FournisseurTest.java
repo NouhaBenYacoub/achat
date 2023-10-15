@@ -2,25 +2,28 @@ package tn.esprit.rh.achat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import tn.esprit.rh.achat.entities.Fournisseur;
 import tn.esprit.rh.achat.repositories.FournisseurRepository;
 import tn.esprit.rh.achat.services.FournisseurServiceImpl;
-import tn.esprit.rh.achat.services.StockServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith( SpringRunner.class)
-@ContextConfiguration(classes = {StockServiceImpl.class})
+@ContextConfiguration(classes = {FournisseurServiceImpl.class})
 public class FournisseurTest {
 
+    @Autowired
     private FournisseurServiceImpl service;
+    @MockBean
     private FournisseurRepository repository;
+
     @Test
     public void getFournisseurTest(){
         System.out.println(" get test fournisseur");
