@@ -1,9 +1,13 @@
 package tn.esprit.rh.achat.controllers;
 
 import io.swagger.annotations.Api;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.rh.achat.DTO.OperateurDTO;
+import tn.esprit.rh.achat.DTO.ReglementDTO;
+import tn.esprit.rh.achat.entities.Operateur;
 import tn.esprit.rh.achat.entities.Reglement;
 import tn.esprit.rh.achat.services.IReglementService;
 
@@ -18,20 +22,26 @@ public class ReglementRestController {
 
     @Autowired
     IReglementService reglementService;
+    @Autowired
+    private ModelMapper modelMapper;
 
 
     // http://localhost:8089/SpringMVC/reglement/add-reglement
     @PostMapping("/add-reglement")
     @ResponseBody
-    public Reglement addReglement(@RequestBody Reglement r) {
-        Reglement reglement = reglementService.addReglement(r);
-        return reglement;
-    }
+    public ReglementDTO addReglement(@RequestBody ReglementDTO reglementDto) {
+        Reglement reglementRequest = modelMapper.map(reglementDto, Reglement.class);
+        Reglement reglement = reglementService.addReglement(reglementRequest);
+            // convert entity to DTO
+            return modelMapper.map(reglement, ReglementDTO.class);
+
+
+        }
+
     @GetMapping("/retrieve-all-reglements")
     @ResponseBody
     public List<Reglement> getReglement() {
-        List<Reglement> list = reglementService.retrieveAllReglements();
-        return list;
+       return reglementService.retrieveAllReglements();
     }
 
     // http://localhost:8089/SpringMVC/reglement/retrieve-reglement/8
@@ -48,7 +58,6 @@ public class ReglementRestController {
         return reglementService.retrieveReglementByFacture(factureId);
     }
 
-    // http://localhost:8089/SpringMVC/reglement/getChiffreAffaireEntreDeuxDate/{startDate}/{endDate}
     @GetMapping(value = "/getChiffreAffaireEntreDeuxDate/{startDate}/{endDate}")
     public float getChiffreAffaireEntreDeuxDate(
             @PathVariable(name = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
