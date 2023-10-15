@@ -14,7 +14,7 @@ import tn.esprit.rh.achat.services.FournisseurServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith( SpringRunner.class)
@@ -27,25 +27,21 @@ public class FournisseurTest {
     private FournisseurRepository repository;
 
     @Test
-    public void getFournisseurTest(){
+    public void getFournisseurTest() {
         System.out.println(" get test fournisseur");
-        long id = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
-        long id2 = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
-        long id3 = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
 
         repository = Mockito.mock(FournisseurRepository.class);
         service = new FournisseurServiceImpl(repository);
 
         List<Fournisseur> fournisseurList = new ArrayList<>();
-        fournisseurList.add(Fournisseur.builder().idFournisseur(id).code("JF5").libelle("Dell").build());
-        fournisseurList.add(Fournisseur.builder().idFournisseur(id2).code("FT4").libelle("Topnet").build());
-        fournisseurList.add(Fournisseur.builder().idFournisseur(id3).code("FT88").libelle("Asus").build());
+        fournisseurList.add(new Fournisseur(123L, "JF5", "Dell"));
+        fournisseurList.add(new Fournisseur(148L, "FT2", "Topnet"));
+        fournisseurList.add(new Fournisseur(136L, "OK8", "Asus"));
         when(repository.findAll()).thenReturn(fournisseurList);
 
-        // Maintenant, vous pouvez ajouter une assertion pour vérifier le comportement de service
-        List<Fournisseur> result = service.retrieveAllFournisseurs();
+        List<Fournisseur> fournisseurs = service.retrieveAllFournisseurs();
 
-        // Vérifiez si le résultat de service correspond à ce que vous avez configuré dans le mock repository
-        assertEquals(fournisseurList, result);
+        assertEquals(fournisseurList, fournisseurs);
+        verify(repository).findAll();
     }
 }
