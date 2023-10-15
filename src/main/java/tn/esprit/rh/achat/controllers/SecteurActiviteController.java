@@ -3,8 +3,10 @@ package tn.esprit.rh.achat.controllers;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.rh.achat.DTO.Secteuractivitedto;
 import tn.esprit.rh.achat.entities.SecteurActivite;
 import tn.esprit.rh.achat.services.ISecteurActiviteService;
+import org.modelmapper.ModelMapper;
 
 import java.util.List;
 
@@ -13,6 +15,8 @@ import java.util.List;
 @RequestMapping("/secteurActivite")
 @CrossOrigin("*")
 public class SecteurActiviteController {
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@Autowired
 	ISecteurActiviteService secteurActiviteService;
@@ -21,8 +25,8 @@ public class SecteurActiviteController {
 	@GetMapping("/retrieve-all-secteurActivite")
 	@ResponseBody
 	public List<SecteurActivite> getSecteurActivite() {
-		List<SecteurActivite> list = secteurActiviteService.retrieveAllSecteurActivite();
-		return list;
+		return secteurActiviteService.retrieveAllSecteurActivite();
+
 	}
 
 	// http://localhost:8089/SpringMVC/secteurActivite/retrieve-secteurActivite/8
@@ -36,11 +40,11 @@ public class SecteurActiviteController {
 	@PostMapping("/add-secteurActivite")
 	@ResponseBody
 	public SecteurActivite addSecteurActivite(@RequestBody SecteurActivite sa) {
-		SecteurActivite secteurActivite = secteurActiviteService.addSecteurActivite(sa);
-		return secteurActivite;
+		return  secteurActiviteService.addSecteurActivite(sa);
+
 	}
 
-	// http://localhost:8089/SpringMVC/secteurActivite/remove-secteurActivite/{secteurActivite-id}
+
 	@DeleteMapping("/remove-secteurActivite/{secteurActivite-id}")
 	@ResponseBody
 	public void removeSecteurActivite(@PathVariable("secteurActivite-id") Long secteurActiviteId) {
@@ -50,9 +54,14 @@ public class SecteurActiviteController {
 	// http://localhost:8089/SpringMVC/secteurActivite/modify-secteurActivite
 	@PutMapping("/modify-secteurActivite")
 	@ResponseBody
-	public SecteurActivite modifySecteurActivite(@RequestBody SecteurActivite secteurActivite) {
-		return secteurActiviteService.updateSecteurActivite(secteurActivite);
-	}
+	public Secteuractivitedto modifySecteurActivite(@RequestBody Secteuractivitedto secteurActivitedto) {
+
+		SecteurActivite secteurActiviteRequest = modelMapper.map(secteurActivitedto, SecteurActivite.class);
+
+		SecteurActivite secteurActivite = secteurActiviteService.updateSecteurActivite(secteurActiviteRequest);
+
+		// convert entity to DTO
+		 return   modelMapper.map(secteurActivite, Secteuractivitedto.class);}
 
 	
 }
