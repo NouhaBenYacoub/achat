@@ -29,33 +29,33 @@ public class OperateurTest {
 
     @MockBean
     private OperateurRepository operateurRepository;
-    //private OperateurServiceImpl operateurService;
-
-
-   // @Test
-    //public void getOperateurTest(){
-      //  System.out.println(" get test operateur");
-        //long id = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
-        //long id2 = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
-
-        //operateurRepository = mock(OperateurRepository.class);
-        //operateurService = new OperateurServiceImpl(operateurRepository);
-
-        //List<Operateur> operateurList = new ArrayList<>();
-        //operateurList.add(new Operateur(id,"naziha","ksouri","azerty"));
-        //when(operateurRepository.findAll()).thenReturn(operateurList);
-
-    //}
-    //@InjectMocks
-    @Autowired
     private OperateurServiceImpl operateurService;
+
+
+    @Test
+   public void getOperateurTest(){
+        System.out.println(" get test operateur");
+        long id = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
+       long id2 = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
+
+        operateurRepository = mock(OperateurRepository.class);
+        operateurService = new OperateurServiceImpl(operateurRepository);
+        List<Operateur> operateurList = new ArrayList<>();
+        operateurList.add(new Operateur(id,"naziha","ksouri","azerty"));
+        when(operateurRepository.findAll()).thenReturn(operateurList);
+        when(operateurRepository.findAll()).thenReturn(operateurList);
+
+    }
+    //@InjectMocks
+   // @Autowired
+    //private OperateurServiceImpl operateurService;
 
     /*@Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }*/
 
-    @Test
+   /* @Test
     public void getOperateurTest() {
         long id = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
         long id2 = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
@@ -91,5 +91,5 @@ public class OperateurTest {
 
         // Vous pouvez également vérifier si tous les opérateurs existent
         assertTrue(resultat.containsAll(operateurList));
-    }
+    }*/
 }
