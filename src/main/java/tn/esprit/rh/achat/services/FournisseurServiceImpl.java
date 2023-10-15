@@ -6,10 +6,7 @@ import org.springframework.stereotype.Service;
 import tn.esprit.rh.achat.entities.DetailFournisseur;
 import tn.esprit.rh.achat.entities.Fournisseur;
 import tn.esprit.rh.achat.entities.SecteurActivite;
-import tn.esprit.rh.achat.repositories.DetailFournisseurRepository;
-import tn.esprit.rh.achat.repositories.FournisseurRepository;
-import tn.esprit.rh.achat.repositories.ProduitRepository;
-import tn.esprit.rh.achat.repositories.SecteurActiviteRepository;
+import tn.esprit.rh.achat.repositories.*;
 
 import java.util.Date;
 import java.util.List;
@@ -26,6 +23,9 @@ public class FournisseurServiceImpl implements IFournisseurService {
 	ProduitRepository produitRepository;
 	@Autowired
 	SecteurActiviteRepository secteurActiviteRepository;
+
+	public FournisseurServiceImpl(FournisseurRepository repository) {
+	}
 
 	@Override
 	public List<Fournisseur> retrieveAllFournisseurs() {
