@@ -39,8 +39,12 @@ public class FournisseurRestController {
 	// http://localhost:8089/SpringMVC/fournisseur/add-fournisseur
 	@PostMapping("/add-fournisseur")
 	@ResponseBody
-	public Fournisseur addFournisseur(@RequestBody Fournisseur f) {
-		return fournisseurService.addFournisseur(f);
+	public FournisseurDTO addFournisseur(@RequestBody FournisseurDTO fournisseurdto) {
+		Fournisseur fournisseurRequest = modelMapper.map(fournisseurdto, Fournisseur.class);
+		Fournisseur fournisseur = fournisseurService.addFournisseur(fournisseurRequest);
+
+		// convert entity to DTO
+		return modelMapper.map(fournisseur, FournisseurDTO.class);
 
 	}
 
