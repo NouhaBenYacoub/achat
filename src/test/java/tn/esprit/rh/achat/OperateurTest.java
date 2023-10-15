@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import tn.esprit.rh.achat.entities.Operateur;
@@ -26,7 +27,7 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration(classes = {OperateurServiceImpl.class})
 public class OperateurTest {
 
-    @Mock
+    @MockBean
     private OperateurRepository operateurRepository;
     //private OperateurServiceImpl operateurService;
 
@@ -49,10 +50,10 @@ public class OperateurTest {
     @Autowired
     private OperateurServiceImpl operateurService;
 
-    @Before
+    /*@Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-    }
+    }*/
 
     @Test
     public void getOperateurTest() {
