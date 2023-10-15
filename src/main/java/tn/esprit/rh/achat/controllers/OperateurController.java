@@ -4,7 +4,7 @@ import io.swagger.annotations.Api;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.rh.achat.dto.OperateurDTO;
+import tn.esprit.rh.achat.entitiesdto.OperateurDTO;
 import tn.esprit.rh.achat.entities.Operateur;
 import tn.esprit.rh.achat.services.IOperateurService;
 

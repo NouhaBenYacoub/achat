@@ -1,44 +1,71 @@
 package tn.esprit.rh.achat;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
+import org.mockito.Mock;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tn.esprit.rh.achat.entities.Operateur;
-import tn.esprit.rh.achat.entities.Produit;
-import tn.esprit.rh.achat.repositories.CategorieProduitRepository;
 import tn.esprit.rh.achat.repositories.OperateurRepository;
-import tn.esprit.rh.achat.repositories.ProduitRepository;
-import tn.esprit.rh.achat.repositories.StockRepository;
 import tn.esprit.rh.achat.services.OperateurServiceImpl;
-import tn.esprit.rh.achat.services.ProduitServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-
-@ContextConfiguration(classes = {OperateurServiceImpl.class})
 @ExtendWith(SpringExtension.class)
+@SpringBootTest
 public class OperateurTest {
-    @MockBean
+
+    @Mock
     private OperateurRepository operateurRepository;
 
-    @Autowired
-    private OperateurServiceImpl operateurServiceImpl;
+    private OperateurServiceImpl operateurService;
+
+    @BeforeEach
+    void setUp() {
+        operateurService = new OperateurServiceImpl(operateurRepository);
+    }
+
     @Test
     void testRetrieveAllOperateurs() {
-        ArrayList<Operateur> operateurList = new ArrayList<>();
+        // Create some sample data
+        Operateur operateur1 = new Operateur(1L, "John", "Doe", "password");
+        Operateur operateur2 = new Operateur(2L, "Alice", "Smith", "secret");
+        List<Operateur> operateurList = new ArrayList<>();
+        operateurList.add(operateur1);
+        operateurList.add(operateur2);
+
+        // Mock the behavior of operateurRepository.findAll()
         when(operateurRepository.findAll()).thenReturn(operateurList);
-        List<Operateur> actualRetrieveAllOperateursResult = operateurServiceImpl.retrieveAllOperateurs();
-        assertSame(operateurList, actualRetrieveAllOperateursResult);
-        assertTrue(actualRetrieveAllOperateursResult.isEmpty());
-        verify(operateurRepository).findAll();
+
+        // Call the method you want to test
+        List<Operateur> actualOperateurs = operateurService.retrieveAllOperateurs();
+
+        // Assertions
+        assertEquals(2, actualOperateurs.size());
+        assertEquals("John", actualOperateurs.get(0).getNom());
+        assertEquals("Alice", actualOperateurs.get(1).getNom());
+    }
+
+    @Test
+    void testGetIdOperateur() {
+        // Create a sample Operateur
+        Operateur operateur = new Operateur(1L, "John", "Doe", "password");
+
+        // Mock the behavior of operateurRepository.findById()
+        when(operateurRepository.findById(1L)).thenReturn(Optional.of(operateur));
+
+        // Call the method you want to test
+        Optional<Operateur> actualOperateur = operateurService.getById(1L);
+
+        // Assertions
+        assertEquals("John", actualOperateur.get().getNom());
+        assertEquals("Doe", actualOperateur.get().getPrenom());
     }
 }
