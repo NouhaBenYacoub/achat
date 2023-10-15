@@ -1,13 +1,11 @@
-package tn.esprit.rh.achat.DTO;
+package tn.esprit.rh.achat.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import tn.esprit.rh.achat.entities.CategorieFournisseur;
 import tn.esprit.rh.achat.entities.DetailFournisseur;
 import tn.esprit.rh.achat.entities.Facture;
 import tn.esprit.rh.achat.entities.SecteurActivite;
 
-import javax.persistence.*;
 import java.util.Set;
 @Data
 
