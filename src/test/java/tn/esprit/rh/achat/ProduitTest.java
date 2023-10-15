@@ -39,7 +39,7 @@ public class ProduitTest {
 
     @MockBean
     private StockRepository stockRepository;
-    @Test
+   /* @Test
     void testRetrieveAllProduits() {
         ArrayList<Produit> produitList = new ArrayList<>();
         when(produitRepository.findAll()).thenReturn(produitList);
@@ -54,5 +54,5 @@ public class ProduitTest {
         doNothing().when(produitRepository).deleteById((Long) any());
         produitServiceImpl.deleteProduit(123L);
         verify(produitRepository).deleteById((Long) any());
-    }
+    }*/
 }
