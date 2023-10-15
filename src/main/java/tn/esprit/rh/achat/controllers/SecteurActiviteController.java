@@ -39,8 +39,14 @@ public class SecteurActiviteController {
 	// http://localhost:8089/SpringMVC/secteurActivite/add-secteurActivite
 	@PostMapping("/add-secteurActivite")
 	@ResponseBody
-	public SecteurActivite addSecteurActivite(@RequestBody SecteurActivite sa) {
-		return  secteurActiviteService.addSecteurActivite(sa);
+	public Secteuractivitedto addSecteurActivite(@RequestBody Secteuractivitedto secteurActivitedto) {
+
+		SecteurActivite secteurActiviteRequest = modelMapper.map(secteurActivitedto, SecteurActivite.class);
+
+		SecteurActivite secteurActivite =secteurActiviteService.addSecteurActivite(secteurActiviteRequest);
+
+		// convert entity to DTO
+		return   modelMapper.map(secteurActivite, Secteuractivitedto.class);
 
 	}
 
