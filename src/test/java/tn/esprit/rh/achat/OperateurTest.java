@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import tn.esprit.rh.achat.entities.Operateur;
@@ -44,7 +45,8 @@ public class OperateurTest {
         //when(operateurRepository.findAll()).thenReturn(operateurList);
 
     //}
-    @InjectMocks
+    //@InjectMocks
+    @Autowired
     private OperateurServiceImpl operateurService;
 
     @Before
