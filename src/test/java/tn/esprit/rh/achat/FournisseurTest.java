@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import tn.esprit.rh.achat.entities.Fournisseur;
 import tn.esprit.rh.achat.repositories.FournisseurRepository;
 import tn.esprit.rh.achat.services.FournisseurServiceImpl;
+import tn.esprit.rh.achat.services.ProduitServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,24 +22,33 @@ import static org.mockito.Mockito.*;
 @ContextConfiguration(classes = {FournisseurServiceImpl.class})
 public class FournisseurTest {
 
-    @Autowired
-    private FournisseurServiceImpl service;
     @MockBean
     private FournisseurRepository repository;
+    @Autowired
+    private FournisseurServiceImpl fournisseurServiceImpl;
 
-    @Test
+ /*   @Test
     public void getFournisseurTest() {
         System.out.println(" get test fournisseur");
 
         repository = Mockito.mock(FournisseurRepository.class);
-        service = new FournisseurServiceImpl(repository);
+        fournisseurServiceImpl = new FournisseurServiceImpl(repository);
 
         List<Fournisseur> fournisseurList = new ArrayList<>();
         fournisseurList.add(new Fournisseur(123L, "JF5", "Dell"));
         fournisseurList.add(new Fournisseur(148L, "FT2", "Topnet"));
         fournisseurList.add(new Fournisseur(136L, "OK8", "Asus"));
         when(repository.findAll()).thenReturn(fournisseurList);
+    }*/
 
+    @Test
+    public void getFournisseurTest() {
+        List<Fournisseur> fournisseurList = new ArrayList<>();
+        when(repository.findAll()).thenReturn(fournisseurList);
+        List<Fournisseur> actualRetrieveAllFournisseurResult = fournisseurServiceImpl.retrieveAllFournisseurs();
 
+        assertSame(fournisseurList, actualRetrieveAllFournisseurResult);
+        assertTrue(actualRetrieveAllFournisseurResult.isEmpty());
+        verify(repository).findAll();
     }
 }
