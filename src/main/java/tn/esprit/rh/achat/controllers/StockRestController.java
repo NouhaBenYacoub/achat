@@ -2,8 +2,12 @@ package tn.esprit.rh.achat.controllers;
 
 
 import io.swagger.annotations.Api;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.rh.achat.DTO.CategorieProduitDTO;
+import tn.esprit.rh.achat.DTO.StockDTO;
+import tn.esprit.rh.achat.entities.CategorieProduit;
 import tn.esprit.rh.achat.entities.Stock;
 import tn.esprit.rh.achat.services.IStockService;
 
@@ -17,13 +21,14 @@ public class StockRestController {
 
 	@Autowired
 	IStockService stockService;
+	@Autowired
+	private ModelMapper modelMapper;
 
 	// http://localhost:8089/SpringMVC/stock/retrieve-all-stocks
 	@GetMapping("/retrieve-all-stocks")
 	@ResponseBody
 	public List<Stock> getStocks() {
-		List<Stock> list = stockService.retrieveAllStocks();
-		return list;
+		return stockService.retrieveAllStocks();
 	}
 
 	// http://localhost:8089/SpringMVC/stock/retrieve-stock/8
@@ -36,12 +41,14 @@ public class StockRestController {
 	// http://localhost:8089/SpringMVC/stock/add-stock
 	@PostMapping("/add-stock")
 	@ResponseBody
-	public Stock addStock(@RequestBody Stock s) {
-		Stock stock = stockService.addStock(s);
-		return stock;
+	public StockDTO addStock(@RequestBody StockDTO stockDTO) {
+		Stock stockRequest = modelMapper.map(stockDTO, Stock.class);
+
+		Stock stock = stockService.addStock(stockRequest);
+
+		return modelMapper.map(stock, StockDTO.class);
 	}
 
-	// http://localhost:8089/SpringMVC/stock/remove-stock/{stock-id}
 	@DeleteMapping("/remove-stock/{stock-id}")
 	@ResponseBody
 	public void removeStock(@PathVariable("stock-id") Long stockId) {
@@ -51,24 +58,13 @@ public class StockRestController {
 	// http://localhost:8089/SpringMVC/stock/modify-stock
 	@PutMapping("/modify-stock")
 	@ResponseBody
-	public Stock modifyStock(@RequestBody Stock stock) {
-		return stockService.updateStock(stock);
-	}
+	public StockDTO modifyStock(@RequestBody StockDTO stockDTO) {
 
-	/*
-	 * Spring Scheduler : Comparer QteMin tolérée (à ne pa dépasser) avec
-	 * Quantité du stock et afficher sur console la liste des produits inférieur
-	 * au stock La fct schédulé doit obligatoirement etre sans paramètres et
-	 * sans retour (void)
-	 */
-	// http://localhost:8089/SpringMVC/stock/retrieveStatusStock
-	// @Scheduled(fixedRate = 60000)
-	// @Scheduled(fixedDelay = 60000)
-	//@Scheduled(cron = "*/60 * * * * *")
-	//@GetMapping("/retrieveStatusStock")
-//	@ResponseBody
-//	public void retrieveStatusStock() {
-//		stockService.retrieveStatusStock();
-//	}
+		Stock stockRequest = modelMapper.map(stockDTO, Stock.class);
+
+		Stock stock = stockService.updateStock(stockRequest);
+
+		return modelMapper.map(stock, StockDTO.class);
+	}
 
 }
