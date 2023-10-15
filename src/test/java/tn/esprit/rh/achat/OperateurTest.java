@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -68,5 +69,24 @@ public class OperateurTest {
         assertEquals("naziha", operateurRetourne.getNom());
         assertEquals("ksouri", operateurRetourne.getPrenom());
         assertEquals("azerty", operateurRetourne.getPassword());
+    }
+
+    @Test
+    public void testTousLesOperateursExistants() {
+        long id = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
+        long id2 = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
+
+        List<Operateur> operateurList = new ArrayList<>();
+        operateurList.add(new Operateur(id, "naziha", "ksouri", "azerty"));
+        operateurList.add(new Operateur(id2, "najwa", "joujou", "password2"));
+
+        when(operateurRepository.findAll()).thenReturn(operateurList);
+
+        List<Operateur> resultat = operateurService.retrieveAllOperateurs();
+
+        assertEquals(2, resultat.size());
+
+        // Vous pouvez également vérifier si tous les opérateurs existent
+        assertTrue(resultat.containsAll(operateurList));
     }
 }
