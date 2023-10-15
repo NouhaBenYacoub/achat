@@ -1,8 +1,10 @@
 package tn.esprit.rh.achat.controllers;
 
 import io.swagger.annotations.Api;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.rh.achat.DTO.OperateurDTO;
 import tn.esprit.rh.achat.entities.Operateur;
 import tn.esprit.rh.achat.services.IOperateurService;
 
@@ -16,13 +18,15 @@ public class OperateurController {
 
 	@Autowired
 	IOperateurService operateurService;
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	// http://localhost:8089/SpringMVC/operateur/retrieve-all-operateurs
 	@GetMapping("/retrieve-all-operateurs")
 	@ResponseBody
 	public List<Operateur> getOperateurs() {
-		List<Operateur> list = operateurService.retrieveAllOperateurs();
-		return list;
+		return operateurService.retrieveAllOperateurs();
+
 	}
 
 	// http://localhost:8089/SpringMVC/operateur/retrieve-operateur/8
@@ -35,12 +39,16 @@ public class OperateurController {
 	// http://localhost:8089/SpringMVC/operateur/add-operateur
 	@PostMapping("/add-operateur")
 	@ResponseBody
-	public Operateur addOperateur(@RequestBody Operateur op) {
-		Operateur operateur = operateurService.addOperateur(op);
-		return operateur;
+	public OperateurDTO addOperateur(@RequestBody OperateurDTO operateurDto) {
+		Operateur operateurRequest = modelMapper.map(operateurDto, Operateur.class);
+		Operateur operateur = operateurService.addOperateur(operateurRequest);
+		// convert entity to DTO
+		return modelMapper.map(operateur, OperateurDTO.class);
+
+
 	}
 
-	// http://localhost:8089/SpringMVC/operateur/remove-operateur/{operateur-id}
+
 	@DeleteMapping("/remove-operateur/{operateur-id}")
 	@ResponseBody
 	public void removeOperateur(@PathVariable("operateur-id") Long operateurId) {
