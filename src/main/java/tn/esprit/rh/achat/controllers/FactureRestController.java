@@ -1,9 +1,11 @@
 package tn.esprit.rh.achat.controllers;
 
 import io.swagger.annotations.Api;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.rh.achat.DTO.FactureDTO;
 import tn.esprit.rh.achat.entities.Facture;
 import tn.esprit.rh.achat.services.IFactureService;
 
@@ -15,10 +17,15 @@ import java.util.List;
 @Api(tags = "Gestion des factures")
 @RequestMapping("/facture")
 @CrossOrigin("*")
+
 public class FactureRestController {
 
     @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
     IFactureService factureService;
+
 
     // http://localhost:8089/SpringMVC/facture/retrieve-all-factures
     @GetMapping("/retrieve-all-factures")
@@ -36,8 +43,10 @@ public class FactureRestController {
 
     @PostMapping("/add-facture")
     @ResponseBody
-    public Facture addFacture(@RequestBody Facture f) {
-        return factureService.addFacture(f);
+    public FactureDTO addFacture(@RequestBody FactureDTO f) {
+        Facture factureRequest = modelMapper.map(f, Facture.class);
+        Facture facture = factureService.addFacture(factureRequest);
+        return modelMapper.map(facture, FactureDTO.class);
     }
 
     /*
