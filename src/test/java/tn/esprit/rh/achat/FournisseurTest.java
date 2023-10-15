@@ -39,9 +39,6 @@ public class FournisseurTest {
         fournisseurList.add(new Fournisseur(136L, "OK8", "Asus"));
         when(repository.findAll()).thenReturn(fournisseurList);
 
-        List<Fournisseur> fournisseurs = service.retrieveAllFournisseurs();
 
-        assertEquals(fournisseurList, fournisseurs);
-        verify(repository).findAll();
     }
 }

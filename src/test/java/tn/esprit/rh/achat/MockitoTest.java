@@ -75,7 +75,7 @@ public class MockitoTest {
 //            .andExpect((ResultMatcher) jsonPath("$[2].libelleStock", is("alimentaire")));
 //}
 
- /*   @Test
+    @Test
     public void getStockTest(){
         System.out.println(" get test stock");
         long id = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
@@ -89,7 +89,7 @@ public class MockitoTest {
         stockList.add(new Stock(id2,"vest",50,10));
         when(repository.findAll()).thenReturn(stockList);
 
-    }*/
+    }
 
 }
 
