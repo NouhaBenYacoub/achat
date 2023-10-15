@@ -2,6 +2,7 @@ package tn.esprit.rh.achat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
@@ -32,7 +33,7 @@ public class FournisseurTest {
         long id2 = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
         long id3 = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
 
-        repository = mock(FournisseurRepository.class);
+        repository = Mockito.mock(FournisseurRepository.class);
         service = new FournisseurServiceImpl(repository);
 
         List<Fournisseur> fournisseurList = new ArrayList<>();
