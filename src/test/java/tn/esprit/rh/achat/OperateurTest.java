@@ -27,8 +27,8 @@ public class OperateurTest {
     @Test
     public void testAjouterOperateur() {
         Operateur operateur = new Operateur();
-        operateur.setNom("John");
-        operateur.setPrenom("Doe");
+        operateur.setNom("zouzou");
+        operateur.setPrenom("ks");
 
         Mockito.when(operateurRepository.save(operateur)).thenReturn(operateur);
 
