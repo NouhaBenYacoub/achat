@@ -3,12 +3,15 @@ package tn.esprit.rh.achat;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -24,15 +27,17 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith( SpringRunner.class)
+@SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ContextConfiguration(classes = {OperateurServiceImpl.class})
 public class OperateurTest {
 
     @MockBean
     private OperateurRepository operateurRepository;
-    private OperateurServiceImpl operateurService;
+    //private OperateurServiceImpl operateurService;
 
 
-    @Test
+    /*@Test
    public void getOperateurTest(){
         System.out.println(" get test operateur");
         long id = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
@@ -45,17 +50,17 @@ public class OperateurTest {
         when(operateurRepository.findAll()).thenReturn(operateurList);
         when(operateurRepository.findAll()).thenReturn(operateurList);
 
-    }
-    //@InjectMocks
-   // @Autowired
-    //private OperateurServiceImpl operateurService;
+    }*/
+    @InjectMocks
+    @Autowired
+    private OperateurServiceImpl operateurService;
 
     /*@Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }*/
 
-   /* @Test
+   @Test
     public void getOperateurTest() {
         long id = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
         long id2 = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
@@ -91,5 +96,5 @@ public class OperateurTest {
 
         // Vous pouvez également vérifier si tous les opérateurs existent
         assertTrue(resultat.containsAll(operateurList));
-    }*/
+    }
 }
