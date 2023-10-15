@@ -1,9 +1,7 @@
-package tn.esprit.rh.achat.DTO;
+package tn.esprit.rh.achat.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import tn.esprit.rh.achat.entities.Facture;
 
-import javax.persistence.*;
 import java.util.Date;
 
 public class ReglementDTO {
