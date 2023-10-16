@@ -2,6 +2,7 @@ package tn.esprit.rh.achat;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
@@ -39,6 +40,19 @@ public class FournisseurTest {
     private FournisseurServiceImpl fournisseurServiceImpl;
 
     @Test
+    public void getFournisseurTest() {
+        System.out.println(" get test fournisseur");
+
+        fournisseurRepository = Mockito.mock(FournisseurRepository.class);
+        fournisseurServiceImpl = new FournisseurServiceImpl(fournisseurRepository);
+
+        List<Fournisseur> fournisseurList = new ArrayList<>();
+        fournisseurList.add(new Fournisseur(103L, "JF5", "Dell"));
+        fournisseurList.add(new Fournisseur(148L, "FT2", "Topnet"));
+        fournisseurList.add(new Fournisseur(136L, "OK8", "Asus"));
+        when(fournisseurRepository.findAll()).thenReturn(fournisseurList);
+    }
+    @Test
     public void testGetFournisseur() {
         List<Fournisseur> fournisseurList = new ArrayList<>();
         when(fournisseurRepository.findAll()).thenReturn(fournisseurList);
@@ -51,21 +65,7 @@ public class FournisseurTest {
     @Test
     public void testDeleteFournisseur() {
         doNothing().when(fournisseurRepository).deleteById((Long) any());
-        fournisseurServiceImpl.deleteFournisseur(123L);
+        fournisseurServiceImpl.deleteFournisseur(103L);
         verify(fournisseurRepository).deleteById((Long) any());
     }
-
-    /*   @Test
-    public void getFournisseurTest() {
-        System.out.println(" get test fournisseur");
-
-        repository = Mockito.mock(FournisseurRepository.class);
-        fournisseurServiceImpl = new FournisseurServiceImpl(repository);
-
-        List<Fournisseur> fournisseurList = new ArrayList<>();
-        fournisseurList.add(new Fournisseur(123L, "JF5", "Dell"));
-        fournisseurList.add(new Fournisseur(148L, "FT2", "Topnet"));
-        fournisseurList.add(new Fournisseur(136L, "OK8", "Asus"));
-        when(repository.findAll()).thenReturn(fournisseurList);
-    }*/
 }
