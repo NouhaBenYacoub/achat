@@ -35,8 +35,4 @@ public class Operateur implements Serializable{
 	@JsonIgnore
 	private Set<Facture> factures;
 
-
-	public Operateur(String nom) {
-		this.nom=nom;
-	}
 }
