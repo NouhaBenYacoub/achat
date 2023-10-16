@@ -8,10 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tn.esprit.rh.achat.entities.Fournisseur;
-import tn.esprit.rh.achat.repositories.DetailFournisseurRepository;
-import tn.esprit.rh.achat.repositories.FactureRepository;
-import tn.esprit.rh.achat.repositories.FournisseurRepository;
-import tn.esprit.rh.achat.repositories.SecteurActiviteRepository;
+import tn.esprit.rh.achat.repositories.*;
 import tn.esprit.rh.achat.services.FournisseurServiceImpl;
 
 import java.util.ArrayList;
@@ -34,6 +31,8 @@ public class FournisseurTest {
     private FactureRepository factureRepository;
     @MockBean
     private SecteurActiviteRepository secteurActiviteRepository;
+    @MockBean
+    private ProduitRepository produitRepository;
     @MockBean
     private FournisseurRepository fournisseurRepository;
     @Autowired
