@@ -14,7 +14,9 @@ import tn.esprit.rh.achat.services.ProduitServiceImpl;
 import tn.esprit.rh.achat.services.ReglementServiceImpl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -33,7 +35,7 @@ public class ReglementTest {
     @Autowired
     private ReglementServiceImpl reglementService;
 
-    /*@Test
+    @Test
     void testRetrieveAllReglements() {
         // Mocking
         List<Reglement> reglementList = new ArrayList<>();
@@ -48,7 +50,7 @@ public class ReglementTest {
 
         // Vérification que la méthode findAll a été appelée
         verify(reglementRepository).findAll();
-    }*/
+    }
 
 
        @Test
@@ -67,7 +69,7 @@ public class ReglementTest {
             verify(reglementRepository).save(reglement);
         }
 
-       /* @Test
+       @Test
         void testRetrieveReglement() {
             // Mocking
             Long id = 1L;
@@ -117,7 +119,7 @@ public class ReglementTest {
 
             // Vérification que la méthode getChiffreAffaireEntreDeuxDate a été appelée avec les bonnes dates
             verify(reglementRepository).getChiffreAffaireEntreDeuxDate(startDate, endDate);
-        }*/
+        }
 
 
 }
