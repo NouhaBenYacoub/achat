@@ -12,10 +12,7 @@ import tn.esprit.rh.achat.repositories.ProduitRepository;
 import tn.esprit.rh.achat.repositories.StockRepository;
 import tn.esprit.rh.achat.services.ProduitServiceImpl;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
@@ -24,12 +21,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+
 @ContextConfiguration(classes = {ProduitServiceImpl.class})
 @ExtendWith(SpringExtension.class)
 class ProduitTest {
 
     @MockBean
-   private CategorieProduitRepository categorieProduitRepository;
+    private CategorieProduitRepository categorieProduitRepository;
 
     @MockBean
     private ProduitRepository produitRepository;
@@ -39,6 +37,7 @@ class ProduitTest {
 
     @MockBean
     private StockRepository stockRepository;
+
     @Test
     void testRetrieveAllProduits() {
         ArrayList<Produit> produitList = new ArrayList<>();
