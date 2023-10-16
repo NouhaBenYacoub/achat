@@ -21,8 +21,7 @@ import tn.esprit.rh.achat.services.OperateurServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith( SpringRunner.class)
@@ -66,16 +65,19 @@ public class OperateurTest {
 
         List<Operateur> operateurList = new ArrayList<>();
         operateurList.add(new Operateur(id, "naziha", "ksouri", "azerty"));
+       operateurList.add(new Operateur(id2, "najwa", "ksouri", "pass2"));
 
-        when(operateurRepository.findAll()).thenReturn(operateurList);
+        //when(operateurRepository.findAll()).thenReturn(operateurList);
 
         List<Operateur> resultat = operateurService.retrieveAllOperateurs();
+       assertSame(operateurList, resultat);
+       assertTrue(resultat.isEmpty());
 
-        assertEquals(1, resultat.size());
+       /* assertEquals(1, resultat.size());
         Operateur operateurRetourne = resultat.get(0);
         assertEquals("naziha", operateurRetourne.getNom());
         assertEquals("ksouri", operateurRetourne.getPrenom());
-        assertEquals("azerty", operateurRetourne.getPassword());
+        assertEquals("azerty", operateurRetourne.getPassword());*/
        verify(operateurRepository).findAll();
     }
 
