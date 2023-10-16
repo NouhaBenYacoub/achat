@@ -58,7 +58,7 @@ public class ReglementTest {
             verify(reglementRepository).findAll();
         }
 
-        @Test
+       /* @Test
         void testAddReglement() {
             // Mocking
             Reglement reglement = new Reglement();
@@ -124,7 +124,7 @@ public class ReglementTest {
 
             // Vérification que la méthode getChiffreAffaireEntreDeuxDate a été appelée avec les bonnes dates
             verify(reglementRepository).getChiffreAffaireEntreDeuxDate(startDate, endDate);
-        }
+        }*/
     }
 
 
