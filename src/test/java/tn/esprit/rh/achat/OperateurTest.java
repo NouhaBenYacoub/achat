@@ -6,11 +6,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tn.esprit.rh.achat.entities.Operateur;
 import tn.esprit.rh.achat.entities.Reglement;
 import tn.esprit.rh.achat.repositories.FactureRepository;
 import tn.esprit.rh.achat.repositories.OperateurRepository;
 import tn.esprit.rh.achat.services.OperateurServiceImpl;
+import tn.esprit.rh.achat.services.ReglementServiceImpl;
 
 
 import java.util.ArrayList;
@@ -20,8 +23,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
-
-@ExtendWith(MockitoExtension.class)
+@ContextConfiguration(classes = {OperateurServiceImpl.class})
+@ExtendWith(SpringExtension.class)
 class OperateurTest{
 
     @MockBean
