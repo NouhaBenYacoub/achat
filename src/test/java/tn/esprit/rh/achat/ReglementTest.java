@@ -30,27 +30,23 @@ public class ReglementTest {
 
         @Mock
         private FactureRepository factureRepository;
-
         @Mock
         private ReglementRepository reglementRepository;
-
         @InjectMocks
         private ReglementServiceImpl reglementService;
-
         @BeforeEach
         public void setUp() {
             MockitoAnnotations.openMocks(this);
         }
-
         @Test
         void testRetrieveAllReglements() {
             // Mocking
             List<Reglement> mockReglements = new ArrayList<>();
+            mockReglements.add(new Reglement(1, 100,200));
+            mockReglements.add(new Reglement(2, 200,300));
             when(reglementRepository.findAll()).thenReturn(mockReglements);
-
             // Test
             List<Reglement> result = reglementService.retrieveAllReglements();
-
             // Assertions
             assertEquals(mockReglements, result);
 
