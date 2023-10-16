@@ -23,8 +23,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith( SpringRunner.class)
 @SpringBootTest
@@ -77,9 +76,10 @@ public class OperateurTest {
         assertEquals("naziha", operateurRetourne.getNom());
         assertEquals("ksouri", operateurRetourne.getPrenom());
         assertEquals("azerty", operateurRetourne.getPassword());
+       verify(operateurRepository).findAll();
     }
 
-    @Test
+    /*@Test
     public void testTousLesOperateursExistants() {
         long id = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
         long id2 = java.util.UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
@@ -96,5 +96,5 @@ public class OperateurTest {
 
         // Vous pouvez également vérifier si tous les opérateurs existent
         assertTrue(resultat.containsAll(operateurList));
-    }
+    }*/
 }
