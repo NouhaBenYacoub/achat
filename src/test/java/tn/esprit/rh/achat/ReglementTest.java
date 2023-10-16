@@ -1,11 +1,16 @@
 package tn.esprit.rh.achat;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tn.esprit.rh.achat.entities.Reglement;
+import tn.esprit.rh.achat.repositories.FactureRepository;
 import tn.esprit.rh.achat.repositories.ReglementRepository;
+import tn.esprit.rh.achat.services.ProduitServiceImpl;
 import tn.esprit.rh.achat.services.ReglementServiceImpl;
 
 import java.util.ArrayList;
@@ -16,11 +21,14 @@ import static org.mockito.Mockito.verify;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
+@ContextConfiguration(classes = {ReglementServiceImpl.class})
+@ExtendWith(SpringExtension.class)
 public class ReglementTest {
 
     @MockBean
     private ReglementRepository reglementRepository;
+    @MockBean
+    private FactureRepository factureRepository;
 
     @Autowired
     private ReglementServiceImpl reglementService;
