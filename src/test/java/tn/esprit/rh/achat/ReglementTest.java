@@ -7,53 +7,60 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
 import tn.esprit.rh.achat.entities.Reglement;
 import tn.esprit.rh.achat.repositories.FactureRepository;
 import tn.esprit.rh.achat.repositories.ReglementRepository;
+import tn.esprit.rh.achat.services.ProduitServiceImpl;
 import tn.esprit.rh.achat.services.ReglementServiceImpl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-
-@SpringBootTest
+//@SpringBootTest
+@ContextConfiguration(classes = {ReglementServiceImpl.class})
 @ExtendWith(MockitoExtension.class)
 public class ReglementTest {
 
         @Mock
         private FactureRepository factureRepository;
-        @Mock
+        @MockBean
         private ReglementRepository reglementRepository;
-        @InjectMocks
+      @Autowired
         private ReglementServiceImpl reglementService;
-        @BeforeEach
+        /*@BeforeEach
         public void setUp() {
             MockitoAnnotations.openMocks(this);
-        }
+        }*/
         @Test
         void testRetrieveAllReglements() {
             // Mocking
-            List<Reglement> mockReglements = new ArrayList<>();
-            mockReglements.add(new Reglement(1, 100,200));
-            mockReglements.add(new Reglement(2, 200,300));
-            when(reglementRepository.findAll()).thenReturn(mockReglements);
+           ArrayList<Reglement> reglementList = new ArrayList<>();
+            when(reglementRepository.findAll()).thenReturn(reglementList);
+            //mockReglements.add(new Reglement(1, 100,200));
+            //mockReglements.add(new Reglement(2, 200,300));
             // Test
             List<Reglement> result = reglementService.retrieveAllReglements();
             // Assertions
-            assertEquals(mockReglements, result);
-
+            assertSame(reglementList, result);
+            assertTrue(result.isEmpty());
             // Vérification que la méthode findAll a été appelée
             verify(reglementRepository).findAll();
         }
-
+  /*@Test
+    void testRetrieveAllProduits() {
+        ArrayList<Produit> produitList = new ArrayList<>();
+        when(produitRepository.findAll()).thenReturn(produitList);
+        List<Produit> actualRetrieveAllProduitsResult = produitServiceImpl.retrieveAllProduits();
+        assertSame(produitList, actualRetrieveAllProduitsResult);
+        assertTrue(actualRetrieveAllProduitsResult.isEmpty());
+        verify(produitRepository).findAll();
+    }
        /* @Test
         void testAddReglement() {
             // Mocking
