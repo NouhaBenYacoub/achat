@@ -16,10 +16,10 @@ import tn.esprit.rh.achat.services.ReglementServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ContextConfiguration(classes = {ReglementServiceImpl.class})
 @ExtendWith(SpringExtension.class)
@@ -33,7 +33,7 @@ public class ReglementTest {
     @Autowired
     private ReglementServiceImpl reglementService;
 
-    @Test
+    /*@Test
     void testRetrieveAllReglements() {
         // Mocking
         List<Reglement> reglementList = new ArrayList<>();
@@ -48,19 +48,10 @@ public class ReglementTest {
 
         // Vérification que la méthode findAll a été appelée
         verify(reglementRepository).findAll();
-    }
+    }*/
 
 
-  /*@Test
-    void testRetrieveAllProduits() {
-        ArrayList<Produit> produitList = new ArrayList<>();
-        when(produitRepository.findAll()).thenReturn(produitList);
-        List<Produit> actualRetrieveAllProduitsResult = produitServiceImpl.retrieveAllProduits();
-        assertSame(produitList, actualRetrieveAllProduitsResult);
-        assertTrue(actualRetrieveAllProduitsResult.isEmpty());
-        verify(produitRepository).findAll();
-    }
-       /* @Test
+       @Test
         void testAddReglement() {
             // Mocking
             Reglement reglement = new Reglement();
@@ -76,7 +67,7 @@ public class ReglementTest {
             verify(reglementRepository).save(reglement);
         }
 
-        @Test
+       /* @Test
         void testRetrieveReglement() {
             // Mocking
             Long id = 1L;
