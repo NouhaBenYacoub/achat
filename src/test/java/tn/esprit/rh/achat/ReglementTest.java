@@ -1,57 +1,48 @@
 package tn.esprit.rh.achat;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
 import tn.esprit.rh.achat.entities.Reglement;
-import tn.esprit.rh.achat.repositories.FactureRepository;
 import tn.esprit.rh.achat.repositories.ReglementRepository;
-import tn.esprit.rh.achat.services.ProduitServiceImpl;
 import tn.esprit.rh.achat.services.ReglementServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
+
 import static org.mockito.Mockito.when;
-//@SpringBootTest
-@ContextConfiguration(classes = {ReglementServiceImpl.class})
-@ExtendWith(MockitoExtension.class)
+import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@SpringBootTest
 public class ReglementTest {
 
-        @Mock
-        private FactureRepository factureRepository;
-        @MockBean
-        private ReglementRepository reglementRepository;
-      @Autowired
-        private ReglementServiceImpl reglementService;
-        /*@BeforeEach
-        public void setUp() {
-            MockitoAnnotations.openMocks(this);
-        }*/
-        @Test
-        void testRetrieveAllReglements() {
-            // Mocking
-           ArrayList<Reglement> reglementList = new ArrayList<>();
-            when(reglementRepository.findAll()).thenReturn(reglementList);
-            //mockReglements.add(new Reglement(1, 100,200));
-            //mockReglements.add(new Reglement(2, 200,300));
-            // Test
-            List<Reglement> result = reglementService.retrieveAllReglements();
-            // Assertions
-            assertSame(reglementList, result);
-            assertTrue(result.isEmpty());
-            // Vérification que la méthode findAll a été appelée
-            verify(reglementRepository).findAll();
-        }
+    @MockBean
+    private ReglementRepository reglementRepository;
+
+    @Autowired
+    private ReglementServiceImpl reglementService;
+
+    @Test
+    void testRetrieveAllReglements() {
+        // Mocking
+        List<Reglement> reglementList = new ArrayList<>();
+        when(reglementRepository.findAll()).thenReturn(reglementList);
+
+        // Test
+        List<Reglement> result = reglementService.retrieveAllReglements();
+
+        // Assertions
+        assertSame(reglementList, result);
+        assertTrue(result.isEmpty());
+
+        // Vérification que la méthode findAll a été appelée
+        verify(reglementRepository).findAll();
+    }
+
+
   /*@Test
     void testRetrieveAllProduits() {
         ArrayList<Produit> produitList = new ArrayList<>();
@@ -128,7 +119,7 @@ public class ReglementTest {
             // Vérification que la méthode getChiffreAffaireEntreDeuxDate a été appelée avec les bonnes dates
             verify(reglementRepository).getChiffreAffaireEntreDeuxDate(startDate, endDate);
         }*/
-    }
 
 
+}
 
