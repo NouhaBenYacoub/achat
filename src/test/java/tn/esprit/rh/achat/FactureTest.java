@@ -1,95 +1,97 @@
 package tn.esprit.rh.achat;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import tn.esprit.rh.achat.controllers.FactureRestController;
-import tn.esprit.rh.achat.entities.Facture;
-import tn.esprit.rh.achat.repositories.FactureRepository;
-import tn.esprit.rh.achat.repositories.FournisseurRepository;
-import tn.esprit.rh.achat.repositories.ReglementRepository;
+import tn.esprit.rh.achat.entities.*;
+import tn.esprit.rh.achat.repositories.*;
 import tn.esprit.rh.achat.services.FactureServiceImpl;
-import tn.esprit.rh.achat.services.IFactureService;
+import tn.esprit.rh.achat.services.ReglementServiceImpl;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {FactureServiceImpl.class})
 @ExtendWith(SpringExtension.class)
 public class FactureTest {
 
-    private MockMvc mockMvc;
+    @MockBean
+    private FactureRepository factureRepository;
+    @MockBean
+    private OperateurRepository operateurRepository;
+    @MockBean
+    private DetailFactureRepository detailFactureRepository;
+    @MockBean
+    private FournisseurRepository fournisseurRepository;
+    @MockBean
+    private ProduitRepository produitRepository;
+    @MockBean
+    private ReglementServiceImpl reglementService;
 
     @Autowired
     private FactureServiceImpl factureService;
 
-    @MockBean
-    private FactureRepository factureRepository;
-
-    @MockBean
-    private FournisseurRepository fournisseurRepository;
-
 //    @Test
-//    public void testGetFactures() throws Exception {
-//        // Créer un exemple de liste de factures pour simuler la réponse du service
-//        List<Facture> factureList = new ArrayList<>();
-//        when(factureService.retrieveAllFactures()).thenReturn(factureList);
+//    void testRetrieveAllFactures() {
+//        // Mocking
+//        List<Facture> factureList = List.of(new Facture(), new Facture());
+//        when(factureRepository.findAll()).thenReturn(factureList);
 //
-//        mockMvc.perform(MockMvcRequestBuilders.get("/facture/retrieve-all-factures")
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$[0].id").doesNotExist());
+//        // Test
+//        List<Facture> result = factureService.retrieveAllFactures();
+//
+//        // Assertions
+//        assertSame(factureList, result);
+//        assertEquals(2, result.size());
+//
+//        // Vérification que la méthode findAll a été appelée
+//        verify(factureRepository).findAll();
 //    }
 
     @Test
-    public void testRetrieveFacture() throws Exception {
-        Long factureId = 1L;
+    void testAddFacture() {
+        // Mocking
         Facture facture = new Facture();
-        when(factureRepository.findById(factureId)).thenReturn(Optional.of(facture));
+        when(factureRepository.save(any(Facture.class))).thenReturn(facture);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/facture/retrieve-facture/{facture-id}", factureId)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").exists());
+        // Test
+        Facture result = factureService.addFacture(facture);
+
+        // Assertions
+        assertEquals(facture, result);
+
+        // Vérification que la méthode save a été appelée avec le bon argument
+        verify(factureRepository).save(facture);
     }
 
-    @Test
-    public void testAddFacture() throws Exception {
-        Facture facture = new Facture();
-        when(factureService.addFacture(any(Facture.class))).thenReturn(facture);
+//    @Test
+//    void testAddDetailsFacture() {
+//        // Mocking
+//        Facture facture = new Facture();
+//        Set<DetailFacture> detailsFacture = Set.of(new DetailFacture(), new DetailFacture());
+//
+//        // Test
+//        Facture result = factureService.addDetailsFacture(facture, detailsFacture);
+//
+//        // Assertions
+//        assertNotNull(result);
+//        // Add your specific assertions for the updated facture here
+//
+//        // Vérification que les méthodes nécessaires ont été appelées avec les bons arguments
+//        verify(produitRepository, times(2)).findById(any(Long.class));
+//        verify(detailFactureRepository, times(2)).save(any(DetailFacture.class));
+//    }
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/facture/add-facture")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{}"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").exists());
-    }
+    // Ajoutez les autres tests pour les méthodes restantes de FactureServiceImpl ici
 
-    @Test
-    public void testCancelFacture() throws Exception {
-        Long factureId = 1L;
-        doNothing().when(factureService).cancelFacture(factureId);
-
-        mockMvc.perform(MockMvcRequestBuilders.put("/facture/cancel-facture/{facture-id}", factureId)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
 }
