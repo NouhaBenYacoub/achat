@@ -29,19 +29,23 @@ import tn.esprit.rh.achat.services.IFactureService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
+@ContextConfiguration(classes = {FactureServiceImpl.class})
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
 public class FactureTest {
 
     private MockMvc mockMvc;
 
     @Autowired
-    private FactureRestController factureController;
+    private FactureServiceImpl factureService;
 
     @MockBean
-    private IFactureService factureService;
+    private FactureRepository factureRepository;
+
+    @MockBean
+    private FournisseurRepository fournisseurRepository;
 
 //    @Test
 //    public void testGetFactures() throws Exception {
@@ -59,7 +63,7 @@ public class FactureTest {
     public void testRetrieveFacture() throws Exception {
         Long factureId = 1L;
         Facture facture = new Facture();
-        when(factureService.retrieveFacture(factureId)).thenReturn(facture);
+        when(factureRepository.findById(factureId)).thenReturn(Optional.of(facture));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/facture/retrieve-facture/{facture-id}", factureId)
                         .contentType(MediaType.APPLICATION_JSON))
