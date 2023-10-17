@@ -102,6 +102,8 @@ public class FactureTest {
 
         // Vérification que la méthode findById a été appelée avec le bon argument
         verify(factureRepository).findById(factureId);
+
+        assertTrue(facture.getArchivee());
     }
 
 
