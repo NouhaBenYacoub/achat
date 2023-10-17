@@ -3,6 +3,9 @@ package tn.esprit.rh.achat;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,39 +30,29 @@ import tn.esprit.rh.achat.services.IFactureService;
 import java.util.ArrayList;
 import java.util.List;
 
-@ContextConfiguration(classes = {FactureServiceImpl.class})
+
 @ExtendWith(SpringExtension.class)
+@SpringBootTest
 public class FactureTest {
 
     private MockMvc mockMvc;
 
     @Autowired
-    private FactureServiceImpl factureService;
+    private FactureRestController factureController;
 
-    @Mock
-    private ReglementRepository reglementRepository;
-
-    @Mock
-    private FournisseurRepository fournisseurRepository;
-
-    @Mock
-    private FactureRepository factureRepository;
+    @MockBean
+    private IFactureService factureService;
 
     @Test
     public void testGetFactures() throws Exception {
         // Créer un exemple de liste de factures pour simuler la réponse du service
         List<Facture> factureList = new ArrayList<>();
-        when(factureRepository.findAll()).thenReturn(factureList);
+        when(factureService.retrieveAllFactures()).thenReturn(factureList);
 
-        // Test
-        List<Facture> result = factureService.retrieveAllFactures();
-
-        // Assertions
-        assertSame(factureList, result);
-        assertTrue(result.isEmpty());
-
-        // Vérification que la méthode findAll a été appelée
-        verify(reglementRepository).findAll();
+        mockMvc.perform(MockMvcRequestBuilders.get("/facture/retrieve-all-factures")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").doesNotExist());
     }
 
 //    @Test
