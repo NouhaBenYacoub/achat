@@ -106,5 +106,16 @@ public class FactureTest {
         assertTrue(facture.getArchivee());
     }
 
+    @Test
+    public void testGetFacturesByFournisseur() throws Exception {
+        Long fournisseurId = 1L;
+        Fournisseur fournisseur = new Fournisseur();
+        when(fournisseurRepository.findById(fournisseurId)).thenReturn(Optional.of(fournisseur));
+        // Test
+        List<Facture> result = factureService.getFacturesByFournisseur(fournisseurId);
+        // Assertions
+        assertFalse(result.isEmpty());
 
+        verify(fournisseurRepository).findById(fournisseurId);
+    }
 }
