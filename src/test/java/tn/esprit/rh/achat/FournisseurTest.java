@@ -7,19 +7,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import tn.esprit.rh.achat.entities.DetailFournisseur;
 import tn.esprit.rh.achat.entities.Fournisseur;
+import tn.esprit.rh.achat.entities.SecteurActivite;
 import tn.esprit.rh.achat.repositories.*;
 import tn.esprit.rh.achat.services.FournisseurServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {FournisseurServiceImpl.class})
 @ExtendWith(SpringExtension.class)
@@ -39,6 +43,17 @@ public class FournisseurTest {
     private FournisseurServiceImpl fournisseurServiceImpl;
 
     @Test
+    void testAddFournisseur() {
+        Fournisseur fournisseur = new Fournisseur();
+        when(fournisseurRepository.save(any(Fournisseur.class))).thenReturn(fournisseur);
+
+        Fournisseur result = fournisseurServiceImpl.addFournisseur(fournisseur);
+
+        assertEquals(fournisseur, result);
+        verify(fournisseurRepository).save(fournisseur);
+    }
+
+    @Test
     public void getFournisseurTest() {
         System.out.println(" get test fournisseur");
 
@@ -56,15 +71,57 @@ public class FournisseurTest {
         List<Fournisseur> fournisseurList = new ArrayList<>();
         when(fournisseurRepository.findAll()).thenReturn(fournisseurList);
         List<Fournisseur> actualRetrieveAllFournisseurResult = fournisseurServiceImpl.retrieveAllFournisseurs();
+
         assertSame(fournisseurList, actualRetrieveAllFournisseurResult);
         assertTrue(actualRetrieveAllFournisseurResult.isEmpty());
         verify(fournisseurRepository).findAll();
     }
+    @Test
+    public void testUpdateFournisseur() {
+        Fournisseur fournisseur = new Fournisseur();
+        DetailFournisseur detailFournisseur = new DetailFournisseur();
+        when(detailFournisseurRepository.save(detailFournisseur)).thenReturn(detailFournisseur);
+
+        FournisseurServiceImpl fournisseurService = new FournisseurServiceImpl(fournisseurRepository);
+        Fournisseur result = fournisseurService.updateFournisseur(fournisseur);
+
+        verify(fournisseurRepository).save(fournisseur);
+    }
+
+
 
     @Test
     public void testDeleteFournisseur() {
         doNothing().when(fournisseurRepository).deleteById((Long) any());
         fournisseurServiceImpl.deleteFournisseur(103L);
+
         verify(fournisseurRepository).deleteById((Long) any());
     }
+
+
+    @Test
+    void testRetrieveFournisseur() {
+        Long fournisseurId = 1L;
+        Fournisseur mockFournisseur = new Fournisseur();
+        when(fournisseurRepository.findById(fournisseurId)).thenReturn(Optional.of(mockFournisseur));
+
+        Fournisseur result = fournisseurServiceImpl.retrieveFournisseur(fournisseurId);
+
+        assertEquals(mockFournisseur, result);
+        verify(fournisseurRepository).findById(fournisseurId);
+    }
+
+    @Test
+    public void testAssignSecteurActiviteToFournisseur() {
+        Fournisseur fournisseur = new Fournisseur();
+        SecteurActivite secteurActivite = new SecteurActivite();
+        when(fournisseurRepository.findById(1L)).thenReturn(Optional.of(fournisseur));
+        when(secteurActiviteRepository.findById(2L)).thenReturn(Optional.of(secteurActivite));
+
+        FournisseurServiceImpl result = new FournisseurServiceImpl(fournisseurRepository);
+
+        result.assignSecteurActiviteToFournisseur(2L, 1L);
+        verify(fournisseurRepository).save(fournisseur);
+    }
+
 }
