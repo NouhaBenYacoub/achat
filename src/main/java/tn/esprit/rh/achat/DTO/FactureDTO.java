@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Data
-public class FactureDTO {
+public class FactureDTO{
 
     private Long idFacture;
     private float montantRemise;
