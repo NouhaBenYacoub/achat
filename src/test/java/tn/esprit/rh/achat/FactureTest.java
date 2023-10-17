@@ -12,14 +12,14 @@ import tn.esprit.rh.achat.repositories.*;
 import tn.esprit.rh.achat.services.FactureServiceImpl;
 import tn.esprit.rh.achat.services.ReglementServiceImpl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = {FactureServiceImpl.class})
 @ExtendWith(SpringExtension.class)
@@ -41,22 +41,22 @@ public class FactureTest {
     @Autowired
     private FactureServiceImpl factureService;
 
-//    @Test
-//    void testRetrieveAllFactures() {
-//        // Mocking
-//        List<Facture> factureList = List.of(new Facture(), new Facture());
-//        when(factureRepository.findAll()).thenReturn(factureList);
-//
-//        // Test
-//        List<Facture> result = factureService.retrieveAllFactures();
-//
-//        // Assertions
-//        assertSame(factureList, result);
-//        assertEquals(2, result.size());
-//
-//        // Vérification que la méthode findAll a été appelée
-//        verify(factureRepository).findAll();
-//    }
+    @Test
+    void testRetrieveAllFactures() {
+        // Mocking
+        ArrayList<Facture> factureList = new ArrayList<>();
+        when(factureRepository.findAll()).thenReturn(factureList);
+
+        // Test
+        List<Facture> result = factureService.retrieveAllFactures();
+
+        // Assertions
+        assertSame(factureList, result);
+        assertEquals(2, result.size());
+
+        // Vérification que la méthode findAll a été appelée
+        verify(factureRepository).findAll();
+    }
 
     @Test
     void testAddFacture() {
@@ -78,7 +78,7 @@ public class FactureTest {
 //    void testAddDetailsFacture() {
 //        // Mocking
 //        Facture facture = new Facture();
-//        Set<DetailFacture> detailsFacture = Set.of(new DetailFacture(), new DetailFacture());
+//        when(factureRepository.save(any(Facture.class))).thenReturn(facture);
 //
 //        // Test
 //        Facture result = factureService.addDetailsFacture(facture, detailsFacture);
