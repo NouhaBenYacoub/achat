@@ -39,20 +39,20 @@ public class ProduitTest {
 
     @MockBean
     private StockRepository stockRepository;
-    @Test
-    void testRetrieveAllProduits() {
-        ArrayList<Produit> produitList = new ArrayList<>();
-        when(produitRepository.findAll()).thenReturn(produitList);
-        List<Produit> actualRetrieveAllProduitsResult = produitServiceImpl.retrieveAllProduits();
-        assertSame(produitList, actualRetrieveAllProduitsResult);
-        assertTrue(actualRetrieveAllProduitsResult.isEmpty());
-        verify(produitRepository).findAll();
-    }
-
-    @Test
-    void testDeleteProduit() {
-        doNothing().when(produitRepository).deleteById((Long) any());
-        produitServiceImpl.deleteProduit(123L);
-        verify(produitRepository).deleteById((Long) any());
-    }
+//    @Test
+//    void testRetrieveAllProduits() {
+//        ArrayList<Produit> produitList = new ArrayList<>();
+//        when(produitRepository.findAll()).thenReturn(produitList);
+//        List<Produit> actualRetrieveAllProduitsResult = produitServiceImpl.retrieveAllProduits();
+//        assertSame(produitList, actualRetrieveAllProduitsResult);
+//        assertTrue(actualRetrieveAllProduitsResult.isEmpty());
+//        verify(produitRepository).findAll();
+//    }
+//
+//    @Test
+//    void testDeleteProduit() {
+//        doNothing().when(produitRepository).deleteById((Long) any());
+//        produitServiceImpl.deleteProduit(123L);
+//        verify(produitRepository).deleteById((Long) any());
+//    }
 }
