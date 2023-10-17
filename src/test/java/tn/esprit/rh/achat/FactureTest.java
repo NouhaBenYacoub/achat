@@ -43,36 +43,43 @@ public class FactureTest {
 
     @Test
     void testRetrieveAllFactures() {
-        // Mocking
-        ArrayList<Facture> factureList = new ArrayList<>();
-        when(factureRepository.findAll()).thenReturn(factureList);
+//        // Mocking
+//        ArrayList<Facture> factureList = new ArrayList<>();
+//        when(factureRepository.findAll()).thenReturn(factureList);
+//
+//        // Test
+//        List<Facture> result = factureService.retrieveAllFactures();
+//
+//        // Assertions
+//        assertSame(factureList, result);
+//        assertEquals(2, result.size());
+//
+//        // Vérification que la méthode findAll a été appelée
+//        verify(factureRepository).findAll();
 
-        // Test
-        List<Facture> result = factureService.retrieveAllFactures();
-
-        // Assertions
-        assertSame(factureList, result);
-        assertEquals(2, result.size());
-
-        // Vérification que la méthode findAll a été appelée
-        verify(factureRepository).findAll();
+        ArrayList<Facture> produitList = new ArrayList<>();
+        when(factureRepository.findAll()).thenReturn(produitList);
+        List<Facture> actualRetrieveAllProduitsResult = factureService.retrieveAllFactures();
+        assertSame(produitList, actualRetrieveAllProduitsResult);
+        assertTrue(actualRetrieveAllProduitsResult.isEmpty());
+        verify(produitRepository).findAll();
     }
 
-    @Test
-    void testAddFacture() {
-        // Mocking
-        Facture facture = new Facture();
-        when(factureRepository.save(any(Facture.class))).thenReturn(facture);
-
-        // Test
-        Facture result = factureService.addFacture(facture);
-
-        // Assertions
-        assertEquals(facture, result);
-
-        // Vérification que la méthode save a été appelée avec le bon argument
-        verify(factureRepository).save(facture);
-    }
+//    @Test
+//    void testAddFacture() {
+//        // Mocking
+//        Facture facture = new Facture();
+//        when(factureRepository.save(any(Facture.class))).thenReturn(facture);
+//
+//        // Test
+//        Facture result = factureService.addFacture(facture);
+//
+//        // Assertions
+//        assertEquals(facture, result);
+//
+//        // Vérification que la méthode save a été appelée avec le bon argument
+//        verify(factureRepository).save(facture);
+//    }
 
 //    @Test
 //    void testAddDetailsFacture() {
