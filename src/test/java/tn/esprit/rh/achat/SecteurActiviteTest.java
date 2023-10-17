@@ -4,27 +4,16 @@ package tn.esprit.rh.achat;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import tn.esprit.rh.achat.entities.Operateur;
-import tn.esprit.rh.achat.entities.Reglement;
 import tn.esprit.rh.achat.entities.SecteurActivite;
-import tn.esprit.rh.achat.repositories.FactureRepository;
-import tn.esprit.rh.achat.repositories.OperateurRepository;
 import tn.esprit.rh.achat.repositories.SecteurActiviteRepository;
-import tn.esprit.rh.achat.services.OperateurServiceImpl;
-import tn.esprit.rh.achat.services.ReglementServiceImpl;
 import tn.esprit.rh.achat.services.SecteurActiviteServiceImpl;
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -41,14 +30,14 @@ class SecteurActiviteTest{
     @Test
     void testRetrieveAllSecteurActivite() {
         // Mocking
-        List<SecteurActivite> operateurList = new ArrayList<>();
-        when(secteurActiviteRepository.findAll()).thenReturn(operateurList);
+        List<SecteurActivite> secteurActiviteList = new ArrayList<>();
+        when(secteurActiviteRepository.findAll()).thenReturn(secteurActiviteList);
 
         // Test
         List<SecteurActivite> result = secteurActiviteService.retrieveAllSecteurActivite();
 
         // Assertions
-        assertSame(operateurList, result);
+        assertSame(secteurActiviteList, result);
         assertTrue(result.isEmpty());
 
         // Vérification que la méthode findAll a été appelée
