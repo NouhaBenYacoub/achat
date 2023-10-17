@@ -110,12 +110,18 @@ public class FactureTest {
     public void testGetFacturesByFournisseur() throws Exception {
         Long fournisseurId = 1L;
         Fournisseur fournisseur = new Fournisseur();
+
+        // Mock the behavior of fournisseurRepository
         when(fournisseurRepository.findById(fournisseurId)).thenReturn(Optional.of(fournisseur));
+
         // Test
         List<Facture> result = factureService.getFacturesByFournisseur(fournisseurId);
+
         // Assertions
         assertFalse(result.isEmpty());
 
-//        verify(fournisseurRepository).findById(fournisseurId);
+        // Verify that the findById method was called with the expected argument
+        verify(fournisseurRepository).findById(fournisseurId);
     }
+
 }
