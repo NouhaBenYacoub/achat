@@ -76,6 +76,21 @@ public class FactureTest {
         verify(detailFactureRepository, times(2)).save(any(DetailFacture.class));
     }
 
+    @Test
+    public void testRetrieveFacture() throws Exception {
+        Long factureId = 1L;
+        Facture facture = new Facture();
+        when(factureService.retrieveFacture(factureId)).thenReturn(facture);
+
+        // Test
+        Facture result = factureService.retrieveFacture(factureId);
+
+        // Assertions
+        assertEquals(facture, result);
+
+        // Vérification que la méthode findById a été appelée avec le bon argument
+        verify(factureRepository).findById(factureId);
+    }
     // Ajoutez les autres tests pour les méthodes restantes de FactureServiceImpl ici
 
 }
