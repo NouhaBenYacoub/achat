@@ -2,21 +2,17 @@ package tn.esprit.rh.achat;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.modelmapper.ModelMapper;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import tn.esprit.rh.achat.DTO.StockDTO;
 import tn.esprit.rh.achat.controllers.StockRestController;
 import tn.esprit.rh.achat.entities.Stock;
 import tn.esprit.rh.achat.services.IStockService;
-import tn.esprit.rh.achat.services.ProduitServiceImpl;
-import tn.esprit.rh.achat.services.StockServiceImpl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +29,8 @@ public class StockTest {
 
     @Mock
     private IStockService stockService;
+    @Mock
+    private ModelMapper modelMapper;
 
     @InjectMocks
     private StockRestController stockController;
@@ -44,17 +42,14 @@ public class StockTest {
 
     @Test
     public void testGetStocks() {
-        // Create a mock list of stocks
         List<Stock> stocks = Arrays.asList(
                 RECORD_1, RECORD_2, RECORD_3
         );
 
-        // Define the behavior of the stockService mock
         Mockito.when(stockService.retrieveAllStocks()).thenReturn(stocks);
 
         List<Stock> result = stockController.getStocks();
 
-        // Verify that the controller returned the expected result
         assert result != null;
         assert result.size() == 3;
     }
@@ -63,12 +58,10 @@ public class StockTest {
     @Test
     public void testRetrieveStock() {
 
-        // Define the behavior of the stockService mock
         Mockito.when(stockService.retrieveStock(id1)).thenReturn(RECORD_1);
 
         Stock result = stockController.retrieveStock(id1);
 
-        // Verify that the controller returned the expected result
         assert result != null;
         assert result.getIdStock().equals(id1);
     }
@@ -78,16 +71,62 @@ public class StockTest {
     public void testRemoveStockNonExisting() {
         Long nonExistingStockId = 999L;
 
-        // Define the behavior of the stockService mock to throw an exception for a non-existing stock
         Mockito.doThrow(new IllegalArgumentException("Stock not found")).when(stockService).deleteStock(nonExistingStockId);
 
-        // Verify that the controller handles the exception appropriately
         try {
             stockController.removeStock(nonExistingStockId);
-            // Assert that an exception is thrown or some specific error handling behavior is performed
         } catch (IllegalArgumentException ex) {
-            // Expected behavior
         }
+    }
+
+    @Test
+    public void testAddStock() {
+        StockDTO stockDTO = new StockDTO();
+        stockDTO.setIdStock(1L);
+        stockDTO.setLibelleStock("New Stock");
+        stockDTO.setQte(50);
+        stockDTO.setQteMin(5);
+
+        Stock stock = new Stock();
+        stock.setIdStock(1L);
+        stock.setLibelleStock("New Stock");
+        stock.setQte(50);
+        stock.setQteMin(5);
+
+        Mockito.when(modelMapper.map(Mockito.any(Stock.class), Mockito.any())).thenReturn(stockDTO);
+        Mockito.when(modelMapper.map(Mockito.any(StockDTO.class), Mockito.any())).thenReturn(stock);
+
+        Mockito.when(stockService.addStock(stock)).thenReturn(stock);
+
+        StockDTO result = stockController.addStock(stockDTO);
+
+        assert result != null;
+        assert result.getLibelleStock().equals(stockDTO.getLibelleStock());
+    }
+
+    @Test
+    public void testmodifStock() {
+        StockDTO stockDTO = new StockDTO();
+        stockDTO.setIdStock(1L);
+        stockDTO.setLibelleStock("New Stock");
+        stockDTO.setQte(50);
+        stockDTO.setQteMin(5);
+
+        Stock stock = new Stock();
+        stock.setIdStock(1L);
+        stock.setLibelleStock("New Stock");
+        stock.setQte(50);
+        stock.setQteMin(5);
+
+        Mockito.when(modelMapper.map(Mockito.any(Stock.class), Mockito.any())).thenReturn(stockDTO);
+        Mockito.when(modelMapper.map(Mockito.any(StockDTO.class), Mockito.any())).thenReturn(stock);
+
+        Mockito.when(stockService.updateStock(stock)).thenReturn(stock);
+
+        StockDTO result = stockController.modifyStock(stockDTO);
+
+        assert result != null;
+        assert result.getLibelleStock().equals(stockDTO.getLibelleStock());
     }
 
 }
