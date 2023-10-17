@@ -62,7 +62,7 @@ public class FactureTest {
         List<Facture> actualRetrieveAllProduitsResult = factureService.retrieveAllFactures();
         assertSame(produitList, actualRetrieveAllProduitsResult);
         assertTrue(actualRetrieveAllProduitsResult.isEmpty());
-        verify(produitRepository).findAll();
+        verify(factureRepository).findAll();
     }
 
 //    @Test
