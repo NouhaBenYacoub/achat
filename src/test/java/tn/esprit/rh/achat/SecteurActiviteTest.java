@@ -71,6 +71,22 @@ class SecteurActiviteTest{
         // Vérification que la méthode findById a été appelée avec le bon argument
         verify(secteurActiviteRepository).findById(id);
     }
+    @Test
+    void testAddSecteurActivite() {
+        // Mocking
+        SecteurActivite secteurActivite = new SecteurActivite();
+        when(secteurActiviteRepository.save(any(SecteurActivite.class))).thenReturn(reglement);
+
+        // Test
+        SecteurActivite result = secteurActiviteService.addSecteurActivite(secteurActivite);
+
+        // Assertions
+        assertEquals(secteurActivite, result);
+
+        // Vérification que la méthode save a été appelée avec le bon argument
+        verify(secteurActiviteRepository).save(secteurActivite);
+    }
+
 
     @Test
     void testDeleteSecteurActivite() {
