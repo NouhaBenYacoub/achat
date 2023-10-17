@@ -39,7 +39,7 @@ class SecteurActiviteTest{
     private SecteurActiviteServiceImpl secteurActiviteService;
 
     @Test
-    void testRetrieveAllOperateurs() {
+    void testRetrieveAllSecteurActivite() {
         // Mocking
         List<SecteurActivite> operateurList = new ArrayList<>();
         when(secteurActiviteRepository.findAll()).thenReturn(operateurList);
@@ -56,7 +56,7 @@ class SecteurActiviteTest{
     }
 
     @Test
-    void testRetrieveOperateur() {
+    void testRetrieveSecteurActivite() {
         // Mocking
         Long id = 1L;
         SecteurActivite mockSecteur = new SecteurActivite();
@@ -71,16 +71,16 @@ class SecteurActiviteTest{
         // Vérification que la méthode findById a été appelée avec le bon argument
         verify(secteurActiviteRepository).findById(id);
     }
-//
-//    @Test
-//    void testDeleteOperateur() {
-//        doNothing().when(operateurRepository).deleteById((Long) any());
-//
-//        // Exécutez la méthode delete du service.
-//        operateurService.deleteOperateur(1L);
-//
-//        // Assurez-vous que la méthode deleteById a été appelée une fois avec l'ID spécifié.
-//        verify(operateurRepository).deleteById((Long) any());
-//    }
+
+    @Test
+    void testDeleteSecteurActivite() {
+        doNothing().when(secteurActiviteRepository).deleteById((Long) any());
+
+        // Exécutez la méthode delete du service.
+        secteurActiviteService.deleteSecteurActivite(1l);
+
+        // Assurez-vous que la méthode deleteById a été appelée une fois avec l'ID spécifié.
+        verify(secteurActiviteRepository).deleteById((Long) any());
+    }
 
 }
