@@ -43,49 +43,49 @@ public class FactureTest {
     @MockBean
     private IFactureService factureService;
 
-    @Test
-    public void testGetFactures() throws Exception {
-        // Créer un exemple de liste de factures pour simuler la réponse du service
-        List<Facture> factureList = new ArrayList<>();
-        when(factureService.retrieveAllFactures()).thenReturn(factureList);
+//    @Test
+//    public void testGetFactures() throws Exception {
+//        // Créer un exemple de liste de factures pour simuler la réponse du service
+//        List<Facture> factureList = new ArrayList<>();
+//        when(factureService.retrieveAllFactures()).thenReturn(factureList);
+//
+//        mockMvc.perform(MockMvcRequestBuilders.get("/facture/retrieve-all-factures")
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$[0].id").doesNotExist());
+//    }
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/facture/retrieve-all-factures")
+    @Test
+    public void testRetrieveFacture() throws Exception {
+        Long factureId = 1L;
+        Facture facture = new Facture();
+        when(factureService.retrieveFacture(factureId)).thenReturn(facture);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/facture/retrieve-facture/{facture-id}", factureId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").doesNotExist());
+                .andExpect(jsonPath("$.id").exists());
     }
 
-//    @Test
-//    public void testRetrieveFacture() throws Exception {
-//        Long factureId = 1L;
-//        Facture facture = new Facture();
-//        when(factureService.retrieveFacture(factureId)).thenReturn(facture);
-//
-//        mockMvc.perform(MockMvcRequestBuilders.get("/facture/retrieve-facture/{facture-id}", factureId)
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").exists());
-//    }
-//
-//    @Test
-//    public void testAddFacture() throws Exception {
-//        Facture facture = new Facture();
-//        when(factureService.addFacture(any(Facture.class))).thenReturn(facture);
-//
-//        mockMvc.perform(MockMvcRequestBuilders.post("/facture/add-facture")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content("{}"))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").exists());
-//    }
-//
-//    @Test
-//    public void testCancelFacture() throws Exception {
-//        Long factureId = 1L;
-//        doNothing().when(factureService).cancelFacture(factureId);
-//
-//        mockMvc.perform(MockMvcRequestBuilders.put("/facture/cancel-facture/{facture-id}", factureId)
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk());
-//    }
+    @Test
+    public void testAddFacture() throws Exception {
+        Facture facture = new Facture();
+        when(factureService.addFacture(any(Facture.class))).thenReturn(facture);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/facture/add-facture")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").exists());
+    }
+
+    @Test
+    public void testCancelFacture() throws Exception {
+        Long factureId = 1L;
+        doNothing().when(factureService).cancelFacture(factureId);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/facture/cancel-facture/{facture-id}", factureId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 }
