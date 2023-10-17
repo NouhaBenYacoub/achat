@@ -11,7 +11,7 @@ import tn.esprit.rh.achat.entities.*;
 import tn.esprit.rh.achat.repositories.*;
 import tn.esprit.rh.achat.services.FactureServiceImpl;
 import tn.esprit.rh.achat.services.ReglementServiceImpl;
-
+import java.util.Optional;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -80,11 +80,9 @@ public class FactureTest {
     public void testRetrieveFacture() throws Exception {
         Long factureId = 1L;
         Facture facture = new Facture();
-        when(factureService.retrieveFacture(factureId)).thenReturn(facture);
-
+        when(factureRepository.findById(factureId)).thenReturn(Optional.of(facture));
         // Test
         Facture result = factureService.retrieveFacture(factureId);
-
         // Assertions
         assertEquals(facture, result);
 
