@@ -55,22 +55,22 @@ class SecteurActiviteTest{
         verify(secteurActiviteRepository).findAll();
     }
 
-//    @Test
-//    void testRetrieveOperateur() {
-//        // Mocking
-//        Long id = 1L;
-//        Operateur mockOperateur = new Operateur();
-//        when(operateurRepository.findById(id)).thenReturn(Optional.of(mockOperateur));
-//
-//        // Test
-//        Operateur result = operateurService.retrieveOperateur(id);
-//
-//        // Assertions
-//        assertEquals(mockOperateur, result);
-//
-//        // Vérification que la méthode findById a été appelée avec le bon argument
-//        verify(operateurRepository).findById(id);
-//    }
+    @Test
+    void testRetrieveOperateur() {
+        // Mocking
+        Long id = 1L;
+        SecteurActivite mockSecteur = new SecteurActivite();
+        when(secteurActiviteRepository.findById(id)).thenReturn(Optional.of(mockSecteur));
+
+        // Test
+        SecteurActivite result = secteurActiviteService.retrieveSecteurActivite(id);
+
+        // Assertions
+        assertEquals(mockSecteur, result);
+
+        // Vérification que la méthode findById a été appelée avec le bon argument
+        verify(secteurActiviteRepository).findById(id);
+    }
 //
 //    @Test
 //    void testDeleteOperateur() {
