@@ -52,7 +52,6 @@ public class FournisseurTest {
         assertEquals(fournisseur, result);
         verify(fournisseurRepository).save(fournisseur);
     }
-
     @Test
     public void getFournisseurTest() {
         System.out.println(" get test fournisseur");
@@ -87,9 +86,6 @@ public class FournisseurTest {
 
         verify(fournisseurRepository).save(fournisseur);
     }
-
-
-
     @Test
     public void testDeleteFournisseur() {
         doNothing().when(fournisseurRepository).deleteById((Long) any());
@@ -97,8 +93,6 @@ public class FournisseurTest {
 
         verify(fournisseurRepository).deleteById((Long) any());
     }
-
-
     @Test
     void testRetrieveFournisseur() {
         Long fournisseurId = 1L;
@@ -110,7 +104,6 @@ public class FournisseurTest {
         assertEquals(mockFournisseur, result);
         verify(fournisseurRepository).findById(fournisseurId);
     }
-
     @Test
     public void testAssignSecteurActiviteToFournisseur() {
         Fournisseur fournisseur = new Fournisseur();
