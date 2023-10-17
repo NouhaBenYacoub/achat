@@ -75,7 +75,7 @@ class SecteurActiviteTest{
     void testAddSecteurActivite() {
         // Mocking
         SecteurActivite secteurActivite = new SecteurActivite();
-        when(secteurActiviteRepository.save(any(SecteurActivite.class))).thenReturn(reglement);
+        when(secteurActiviteRepository.save(any(SecteurActivite.class))).thenReturn(secteurActivite);
 
         // Test
         SecteurActivite result = secteurActiviteService.addSecteurActivite(secteurActivite);
