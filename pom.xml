@@ -17,7 +17,6 @@
 		<java.version>1.8</java.version>
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -125,9 +124,8 @@
 					</execution>
 				</executions>
 			</plugin>
-
-
 		</plugins>
+
 			<pluginManagement>
 				<plugins>
 					<plugin>
@@ -137,7 +135,5 @@
 					</plugin>
 				</plugins>
 			</pluginManagement>
-
 	</build>
-
 </project>
