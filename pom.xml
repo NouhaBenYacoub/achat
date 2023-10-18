@@ -9,7 +9,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>tn.esprit.rh</groupId>
-	<artifactId>achat</artifactId>
+	<artifactId>achat-nouhabenyacoub</artifactId>
 	<version>1.0</version>
 	<name>achat</name>
 	<description>Projet pour le module DevOps</description>
@@ -17,7 +17,7 @@
 		<java.version>1.8</java.version>
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 	</properties>
-	<!-- Deploy to Nexus -->
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -80,6 +80,15 @@
 		</dependency>
 
 	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>deploymentRepo</id>
+			<name>Nexus Repository</name>
+			<url>http://localhost:8081/repository/maven-releases/</url>
+		</repository>
+	</distributionManagement>
+
 	<build>
 		<plugins>
 			<plugin>
