@@ -1,7 +1,7 @@
 version: "2"
 services:
   mysqldb:
-    image: mysql
+    image: mysql:latest
     restart: unless-stopped
     ports:
       - 3306:3306
@@ -19,3 +19,5 @@ services:
       - .m2:/root/.m2
     stdin_open: true
     tty: true
+volumes:
+  db:
