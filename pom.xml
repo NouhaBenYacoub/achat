@@ -126,13 +126,6 @@
 
         </plugins>
 
-        <!--        <distributionManagement>-->
-        <!--            <repository>-->
-        <!--                <id>deploymentRepo</id>-->
-        <!--                <name>houssem_charef_5erpbi3</name>-->
-        <!--                <url>http://192.168.1.23:8081/repository/houssem_charef_5erpbi3/</url>-->
-        <!--            </repository>-->
-        <!--        </distributionManagement>-->
 
         <pluginManagement>
             <plugins>
