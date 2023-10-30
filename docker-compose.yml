@@ -22,3 +22,5 @@ services:
   db:
     environment:
       - MYSQL_ROOT_PASSWORD=test
+volumes:
+  db:
