@@ -15,7 +15,6 @@ services:
       - mysqldb
     build: ./bezkoder-app
     restart: on-failure
-    env_file: ./.env
     ports:
       - 8090:8089
     environment:
