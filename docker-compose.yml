@@ -1,7 +1,7 @@
 version: "2"
 services:
   mysqldb:
-    image: mysql:5.7.44
+    image: mysql
     restart: unless-stopped
     ports:
       - 3307:3307
