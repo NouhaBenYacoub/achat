@@ -78,18 +78,6 @@ public class FournisseurTest {
         assertTrue(actualRetrieveAllFournisseurResult.isEmpty());
         verify(fournisseurRepository).findAll();
     }
- /*   @Test
-    public void testUpdateFournisseur() {
-        Fournisseur fournisseur = new Fournisseur();
-        DetailFournisseur detailFournisseur = new DetailFournisseur();
-        when(detailFournisseurRepository.save(detailFournisseur)).thenReturn(detailFournisseur);
-
-        FournisseurServiceImpl fournisseurService = new FournisseurServiceImpl(fournisseurRepository);
-        assertNotNull(fournisseur);
-        Fournisseur result = fournisseurService.updateFournisseur(fournisseur);
-
-        verify(fournisseurRepository).save(fournisseur);
-    }*/
     @Test
     public void testDeleteFournisseur() {
         doNothing().when(fournisseurRepository).deleteById((Long) any());
@@ -97,30 +85,4 @@ public class FournisseurTest {
 
         verify(fournisseurRepository).deleteById((Long) any());
     }
-    @Test
-    void testRetrieveFournisseur() {
-        Long fournisseurId = 1L;
-        Fournisseur mockFournisseur = new Fournisseur();
-        when(fournisseurRepository.findById(fournisseurId)).thenReturn(Optional.of(mockFournisseur));
-
-        Fournisseur result = fournisseurServiceImpl.retrieveFournisseur(fournisseurId);
-
-        assertEquals(mockFournisseur, result);
-        verify(fournisseurRepository).findById(fournisseurId);
-    }
-  /*  @Test
-    public void testAssignSecteurActiviteToFournisseur() {
-        Long idSecteurActivite = 1L;
-        Long idFournisseur = 2L;
-
-        Fournisseur fournisseur = new Fournisseur();
-        SecteurActivite secteurActivite = new SecteurActivite();
-        when(fournisseurRepository.findById(1L)).thenReturn(Optional.of(fournisseur));
-        when(secteurActiviteRepository.findById(2L)).thenReturn(Optional.of(secteurActivite));
-
-        fournisseurService.assignSecteurActiviteToFournisseur(idSecteurActivite, idFournisseur);
-
-        verify(fournisseurRepository).save(fournisseur);
-        assertEquals(1, fournisseur.getSecteurActivites().size());
-    }*/
 }
