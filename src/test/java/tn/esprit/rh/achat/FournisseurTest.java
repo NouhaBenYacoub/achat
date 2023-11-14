@@ -46,6 +46,17 @@ public class FournisseurTest {
     private FournisseurServiceImpl fournisseurServiceImpl;
 
     @Test
+    public void testConstructor() {
+        Long idFournisseur = 1L;
+        String code = "999";
+        String libelle = "Test";
+        Fournisseur fournisseur = new Fournisseur(idFournisseur, code, libelle);
+
+        assertEquals(idFournisseur, fournisseur.getIdFournisseur());
+        assertEquals(code, fournisseur.getCode());
+        assertEquals(libelle, fournisseur.getLibelle());
+    }
+    @Test
     void testAddFournisseur() {
         Fournisseur fournisseur = new Fournisseur();
         when(fournisseurRepository.save(any(Fournisseur.class))).thenReturn(fournisseur);
