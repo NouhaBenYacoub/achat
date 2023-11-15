@@ -64,7 +64,6 @@ public class RelgmntTest {
         assertEquals(mockReglements, result);
         assertTrue(result.isEmpty());
     }
-
     @Test
     public void testAddReglement() {
         Reglement newReglement = new Reglement();
@@ -74,7 +73,6 @@ public class RelgmntTest {
         newReglement.setPayee(false);
 
         when(reglementRepository.save(newReglement)).thenReturn(newReglement);
-
         Reglement addedReglement = reglementService.addReglement(newReglement);
 
         assertNotNull(addedReglement);
