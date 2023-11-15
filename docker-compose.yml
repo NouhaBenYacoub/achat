@@ -7,6 +7,9 @@ services:
       - 3307:3306
     volumes:
       - db:/var/lib/mysql
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD
+      - MYSQL_DATABASE=achatdb
   achat:
     depends_on:
       - mysqldb
