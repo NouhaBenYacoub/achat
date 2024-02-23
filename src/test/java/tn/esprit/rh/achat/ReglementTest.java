@@ -24,12 +24,10 @@ import static org.mockito.Mockito.verify;
 @ContextConfiguration(classes = {ReglementServiceImpl.class})
 @ExtendWith(SpringExtension.class)
 public class ReglementTest {
-
     @MockBean
     private ReglementRepository reglementRepository;
     @MockBean
-    private FactureRepository factureRepository;
-
+    private FactureRepository factureRepository
     @Autowired
     private ReglementServiceImpl reglementService;
 
