@@ -127,7 +127,6 @@
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.7</version>
 				<executions>
-					<!--first execution : for preparing JaCoCo runtime agent-->
 					<execution>
 						<id>prepare-agent</id>
 						<goals>
